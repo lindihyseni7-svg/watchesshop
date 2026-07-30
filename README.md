@@ -79,6 +79,15 @@ Kopjo `config/database.sample.php`, riemertoje ne `config/database.php` dhe
 vendos kredencialet reale qe t'i jep paneli i hosting-ut. Ky file eshte i
 injoruar nga Git, sepse aty ka password te databazes.
 
+Ne `localhost`, aplikacioni perdor automatikisht databazen lokale `watches`
+edhe nese ekziston `config/database.php` me kredencialet e hosting-ut. Kjo lejon
+te zhvillosh ne XAMPP pa e prishur konfigurimin live. Nese do ta testosh
+lokalisht me `config/database.php`, vendos:
+
+```text
+DB_USE_CONFIG_FILE=1
+```
+
 ```php
 <?php
 declare(strict_types=1);
@@ -339,6 +348,37 @@ Pastaj provo:
 | Imazhet nuk shfaqen | Kontrollo qe folderi `img/` eshte upload komplet |
 | Login nuk punon | Sigurohu qe `perdoruesit` u importua dhe sessions jane aktive |
 | Cart/favorites nuk ndryshojne | Kontrollo browser console dhe qe URL `/api/...` nuk kthen 404 |
+
+## Si behen ndryshimet live
+
+Rrjedha e rekomanduar eshte:
+
+```text
+VS Code ne localhost
+  -> testo ne http://localhost/watchesshop/
+  -> commit ne Git
+  -> upload vetem file-t e ndryshuar ne InfinityFree htdocs
+```
+
+InfinityFree nuk lidhet automatikisht me GitHub ne planin falas. Ndryshimet nuk
+dalin live vetem pse i ndryshon ne VS Code ose pse ben `git push`.
+
+Per ndryshime te shpejta:
+
+- Ndrysho file-in ne VS Code.
+- Testo ne localhost.
+- Upload te njejtin file ne `htdocs` me File Manager ose FTP.
+- Bej refresh ne browser me `Ctrl + F5`.
+
+Per ndryshime me databaze:
+
+- Krijo nje migration te ri ne `database/migrations`.
+- Testoje lokalisht.
+- Ekzekuto SQL-in ne phpMyAdmin te InfinityFree.
+- Upload file-t PHP/CSS/JS qe u ndryshuan.
+
+Mos e upload-o `config/database.php` nga localhost nese aty ke vlera lokale.
+Ne InfinityFree ai file duhet te mbaje kredencialet e hosting-ut.
 
 ## Storefront routes
 

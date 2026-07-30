@@ -47,8 +47,9 @@ final class Database
 
         // Shared hosts like InfinityFree usually cannot set env vars, so this
         // ignored file carries the real production credentials outside Git.
+        // Local XAMPP keeps using the defaults unless DB_USE_CONFIG_FILE=1.
         $file = ROOT_PATH . '/config/database.php';
-        if (is_file($file)) {
+        if (is_file($file) && (!self::isLocalRequest() || getenv('DB_USE_CONFIG_FILE') === '1')) {
             $config = array_merge($config, require $file);
         }
 
@@ -59,5 +60,14 @@ final class Database
         $config['port'] = (int) (getenv('DB_PORT') ?: $config['port']);
 
         return $config;
+    }
+
+    private static function isLocalRequest(): bool
+    {
+        $host = strtolower($_SERVER['HTTP_HOST'] ?? $_SERVER['SERVER_NAME'] ?? '');
+        return $host === ''
+            || str_starts_with($host, 'localhost')
+            || str_starts_with($host, '127.0.0.1')
+            || str_starts_with($host, '::1');
     }
 }
