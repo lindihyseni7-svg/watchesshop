@@ -68,6 +68,30 @@ DB_NAME
 
 Lidhja menaxhohet nga `src/Core/Database.php`.
 
+Ne hosting falas, zakonisht nuk ke environment variables. Per kete arsye projekti
+mbeshtet edhe konfigurim privat me file:
+
+```text
+config/database.php
+```
+
+Kopjo `config/database.sample.php`, riemertoje ne `config/database.php` dhe
+vendos kredencialet reale qe t'i jep paneli i hosting-ut. Ky file eshte i
+injoruar nga Git, sepse aty ka password te databazes.
+
+```php
+<?php
+declare(strict_types=1);
+
+return [
+    'host' => 'sqlXXX.infinityfree.com',
+    'user' => 'if0_00000000',
+    'password' => 'password-i-real',
+    'database' => 'if0_00000000_watchesshop',
+    'port' => 3306,
+];
+```
+
 ## Struktura e projektit
 
 ```text
@@ -211,6 +235,110 @@ C:\xampp\mysql\bin\mysqldump.exe -u root --result-file=database\backups\watches-
 ```
 
 Folderi `database/backups` dhe dump files nuk dergohen ne GitHub.
+
+## Deploy falas ne InfinityFree
+
+InfinityFree eshte opsioni me i thjeshte falas per kete projekt, sepse ofron
+PHP, MySQL/MariaDB, `.htaccess`, SSL dhe subdomain falas.
+
+### 1. Krijo databazen
+
+Ne panelin e InfinityFree:
+
+- Hape `MySQL Databases`.
+- Krijo nje databaze te re, per shembull `watchesshop`.
+- Ruaji vlerat `MySQL Hostname`, `MySQL Database Name`, `MySQL Username` dhe
+  password-in e panelit.
+
+### 2. Importo databazen
+
+Ne `phpMyAdmin` te InfinityFree importo kete file:
+
+```text
+database/deploy/infinityfree_install.sql
+```
+
+Ky file eshte installer i plote per databaze bosh. Ai krijon tabelat bazike,
+pastaj aplikon migrations e projektit dhe shton katalogun me produkte.
+
+Llogarite demo pas importit:
+
+| Roli | Email | Password |
+|---|---|---|
+| Administrator | `admin@watchesshop.test` | `admin12345` |
+| Perdorues | `user@watchesshop.test` | `user12345` |
+
+Pas deploy-it ndrysho password-in e administratorit nga paneli admin.
+
+### 3. Vendos kredencialet e databazes
+
+Krijo file:
+
+```text
+config/database.php
+```
+
+Merr shembullin nga `config/database.sample.php` dhe vendos vlerat reale te
+InfinityFree. Mos e publiko kete file ne GitHub.
+
+### 4. Upload files
+
+Ngarko permbajtjen e projektit ne folderin publik te InfinityFree:
+
+```text
+htdocs/
+```
+
+Duhet te jene ne root te `htdocs`, per shembull:
+
+```text
+htdocs/
+|-- index.php
+|-- .htaccess
+|-- config/
+|-- database/
+|-- img/
+|-- public/
+|-- routes/
+`-- src/
+```
+
+Nese e vendos ne subfolder, routing prap punon, por deploy me domain root eshte
+me i paster.
+
+### 5. Testo pas deploy
+
+Kontrollo keto URL:
+
+```text
+/
+/shop
+/login
+/register
+/admin
+/cart
+/favorites
+/contact
+```
+
+Pastaj provo:
+
+- Login si administrator.
+- Shto/modifiko/fshij nje produkt nga `/admin/products`.
+- Register nje user te ri.
+- Shto produkt ne cart pa refresh.
+- Shto produkt ne favorites pa refresh.
+- Kerko, filtro dhe sorto ne `/shop`.
+
+### Probleme te zakonshme
+
+| Simptoma | Zgjidhja |
+|---|---|
+| `Lidhja me databazen deshtoi` | Kontrollo `config/database.php`: host, user, password, database |
+| 404 ne routes si `/shop` | Kontrollo qe `.htaccess` eshte upload ne `htdocs` |
+| Imazhet nuk shfaqen | Kontrollo qe folderi `img/` eshte upload komplet |
+| Login nuk punon | Sigurohu qe `perdoruesit` u importua dhe sessions jane aktive |
+| Cart/favorites nuk ndryshojne | Kontrollo browser console dhe qe URL `/api/...` nuk kthen 404 |
 
 ## Storefront routes
 
