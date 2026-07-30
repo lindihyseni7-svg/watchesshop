@@ -194,6 +194,10 @@
                 form.reset();
                 toast(data.message);
             } catch (error) {
+                if (form.method && form.action) {
+                    form.submit();
+                    return;
+                }
                 toast(error.message);
             } finally {
                 if (submitButton) submitButton.disabled = false;

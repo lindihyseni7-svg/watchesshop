@@ -35,7 +35,8 @@
         <div class="footer-column newsletter">
             <h3>Koha per lajme te mira</h3>
             <p>Koleksione te reja dhe oferta private, direkt ne email.</p>
-            <form class="newsletter-form" data-newsletter-form>
+            <form class="newsletter-form" method="post" action="<?= e(url('newsletter')); ?>" data-newsletter-form>
+                <input type="hidden" name="_token" value="<?= e(csrf_token()); ?>">
                 <label class="sr-only" for="newsletter-email">Email</label>
                 <input id="newsletter-email" name="email" type="email" placeholder="Email adresa" required>
                 <button class="icon-button" type="submit" aria-label="Regjistrohu"><i data-lucide="arrow-right"></i></button>

@@ -13,7 +13,8 @@
         <p>Per nje pergjigje me te sakte, perfshije emrin ose referencen e ores qe po kerkon.</p>
     </div>
 
-    <form class="contact-form" data-contact-form>
+    <form class="contact-form" method="post" action="<?= e(url('contact')); ?>" data-contact-form>
+        <input type="hidden" name="_token" value="<?= e(csrf_token()); ?>">
         <div class="form-row">
             <label>Emri<input type="text" name="name" required placeholder="Emri dhe mbiemri"></label>
             <label>Email<input type="email" name="email" required placeholder="email@example.com"></label>
