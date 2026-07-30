@@ -1,5 +1,5 @@
 # Send clean URLs to the PHP front controller while preserving real files/assets.
-Options -Indexes
+# Directory listing is controlled by the host; some free hosts reject Options.
 RewriteEngine On
 
 # Legacy public URLs. Relative redirects work both in /watchesshop locally and
