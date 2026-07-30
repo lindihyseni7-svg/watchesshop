@@ -1,3 +1,4 @@
+-- Match seeded products to local watch photography and correct catalog naming.
 UPDATE orat SET image = CASE slug
     WHEN 'rolex-submariner-116610' THEN 'img/o34.jpg'
     WHEN 'casio-edifice-efr-556' THEN 'img/o35.jpg'

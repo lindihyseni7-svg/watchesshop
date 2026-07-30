@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+// Manages the current visitor's session-backed favorite product identifiers.
 final class FavoriteService
 {
     public function toggle(int $productId): bool
@@ -33,4 +34,3 @@ final class FavoriteService
         return count($this->ids());
     }
 }
-

@@ -1,3 +1,4 @@
+<?php // Friendly not-found page for unknown clean routes. ?>
 <section class="not-found">
     <span>404</span>
     <h1>Kjo faqe e humbi kohen.</h1>

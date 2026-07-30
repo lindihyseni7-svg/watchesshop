@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Controllers;
 
+// Composes storefront pages from repositories and session-backed services.
 use App\Repositories\ProductRepository;
 use App\Services\CartService;
 use App\Services\FavoriteService;
@@ -95,4 +96,3 @@ final class StoreController
         render($view, $this->shared(['title' => $title]));
     }
 }
-

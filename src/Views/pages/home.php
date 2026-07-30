@@ -1,3 +1,4 @@
+<?php // Homepage with animated collections, featured products and moving brand rail. ?>
 <section class="home-hero">
     <div class="hero-overlay"></div>
     <div class="hero-copy">
@@ -81,4 +82,3 @@
     <article><i data-lucide="rotate-ccw"></i><div><strong>14 dite kthim</strong><span>Bli i qete, vendos pa presion</span></div></article>
     <article><i data-lucide="headphones"></i><div><strong>Keshillim personal</strong><span>Na kontakto per modelin e duhur</span></div></article>
 </section>
-

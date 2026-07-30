@@ -1,4 +1,5 @@
 <?php
+// Reusable catalog card with calculated discount, favorite and AJAX cart controls.
 $isFavorite = in_array((int) $product['id'], $favoriteIds ?? [], true);
 $discount = (float) $product['discount_percent'];
 $finalPrice = (float) $product['cmimi'] * (1 - $discount / 100);
@@ -30,4 +31,3 @@ $finalPrice = (float) $product['cmimi'] * (1 - $discount / 100);
         </div>
     </div>
 </article>
-

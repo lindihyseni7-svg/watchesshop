@@ -1,4 +1,5 @@
 <?php
+// Product detail page with price, history, specifications and related products.
 $discount = (float) $product['discount_percent'];
 $finalPrice = (float) $product['cmimi'] * (1 - $discount / 100);
 $isFavorite = in_array((int) $product['id'], $favoriteIds, true);
@@ -77,4 +78,3 @@ $isFavorite = in_array((int) $product['id'], $favoriteIds, true);
     </div>
 </section>
 <?php endif; ?>
-

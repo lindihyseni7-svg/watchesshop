@@ -1,8 +1,10 @@
 <?php
+// Shared storefront/admin document header and role-aware navigation.
 $currentPath = request_path();
 $title = $title ?? 'Watches Prishtina';
 $cartCount = $cartCount ?? 0;
 $favoriteCount = $favoriteCount ?? 0;
+$flashMessage = pull_flash();
 ?>
 <!doctype html>
 <html lang="sq">
@@ -44,7 +46,7 @@ $favoriteCount = $favoriteCount ?? 0;
             <a class="<?= $currentPath === '/about' ? 'active' : ''; ?>" href="<?= e(url('about')); ?>">Rreth nesh</a>
             <a class="<?= $currentPath === '/contact' ? 'active' : ''; ?>" href="<?= e(url('contact')); ?>">Kontakt</a>
             <?php if (is_admin()): ?>
-                <a href="<?= e(url('perdoruesit.php')); ?>">Admin</a>
+                <a href="<?= e(url('admin')); ?>">Admin</a>
             <?php endif; ?>
         </nav>
 
@@ -60,9 +62,22 @@ $favoriteCount = $favoriteCount ?? 0;
                 <i data-lucide="shopping-bag"></i>
                 <span class="action-count" data-cart-count <?= $cartCount ? '' : 'hidden'; ?>><?= (int) $cartCount; ?></span>
             </a>
+            <?php if (is_authenticated()): ?>
+                <form method="post" action="<?= e(url('logout')); ?>" class="nav-logout">
+                    <input type="hidden" name="_token" value="<?= e(csrf_token()); ?>">
+                    <button class="icon-button" type="submit" aria-label="Ckycu"><i data-lucide="log-out"></i></button>
+                </form>
+            <?php else: ?>
+                <a class="icon-button" href="<?= e(url('login')); ?>" aria-label="Kycu"><i data-lucide="user"></i></a>
+            <?php endif; ?>
         </div>
     </div>
 </header>
 
 <main>
-
+<?php if ($flashMessage): ?>
+    <div class="global-flash <?= e($flashMessage['type']); ?>" data-global-flash>
+        <?= e($flashMessage['message']); ?>
+        <button type="button" aria-label="Mbyll" data-flash-close><i data-lucide="x"></i></button>
+    </div>
+<?php endif; ?>

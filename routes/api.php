@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 
+// JSON endpoints used by cart, favorites, contact and newsletter interactions.
 use App\Repositories\ProductRepository;
 use App\Repositories\CommunicationRepository;
 use App\Services\CartService;

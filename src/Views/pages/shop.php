@@ -1,3 +1,4 @@
+<?php // Filterable and paginated product catalog. ?>
 <section class="page-hero compact">
     <span class="kicker">Katalogu</span>
     <h1>Gjeje oren tende</h1>
@@ -90,4 +91,3 @@
         <?php endif; ?>
     </div>
 </section>
-

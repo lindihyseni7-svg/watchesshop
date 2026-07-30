@@ -1,4 +1,5 @@
 (() => {
+    // Storefront interactions: AJAX cart/favorites, forms, filters and responsive controls.
     const root = document.documentElement;
     const base = (() => {
         const path = window.location.pathname;
@@ -47,6 +48,12 @@
     };
 
     document.addEventListener('click', async (event) => {
+        const flashClose = event.target.closest('[data-flash-close]');
+        if (flashClose) {
+            flashClose.closest('[data-global-flash]')?.remove();
+            return;
+        }
+
         const menuButton = event.target.closest('[data-menu-toggle]');
         if (menuButton) {
             document.body.classList.toggle('menu-open');
@@ -165,6 +172,14 @@
 
     document.querySelectorAll('[data-auto-submit]').forEach((select) => {
         select.addEventListener('change', () => select.form.submit());
+    });
+
+    document.querySelectorAll('[data-confirm-delete]').forEach((form) => {
+        form.addEventListener('submit', (event) => {
+            if (!window.confirm('A je i sigurt qe deshiron ta fshish kete regjistrim?')) {
+                event.preventDefault();
+            }
+        });
     });
 
     document.querySelectorAll('[data-newsletter-form], [data-contact-form]').forEach((form) => {

@@ -1,6 +1,7 @@
 <?php
 declare(strict_types=1);
 
+// Application bootstrap: session, autoloading and shared HTTP/view helpers.
 if (session_status() !== PHP_SESSION_ACTIVE) {
     session_start();
 }
@@ -98,3 +99,70 @@ function is_admin(): bool
     return ($_SESSION['perdoruesi']['role'] ?? '') === 'Administrator';
 }
 
+function is_authenticated(): bool
+{
+    return !empty($_SESSION['perdoruesi']['id']);
+}
+
+function current_user(): ?array
+{
+    return $_SESSION['perdoruesi'] ?? null;
+}
+
+function redirect(string $path): never
+{
+    header('Location: ' . url($path));
+    exit;
+}
+
+function flash(string $type, string $message): void
+{
+    $_SESSION['flash'] = compact('type', 'message');
+}
+
+function pull_flash(): ?array
+{
+    $flash = $_SESSION['flash'] ?? null;
+    unset($_SESSION['flash']);
+    return $flash;
+}
+
+function require_guest(): void
+{
+    if (is_authenticated()) {
+        redirect(is_admin() ? 'admin' : '');
+    }
+}
+
+function require_auth(): void
+{
+    if (!is_authenticated()) {
+        flash('error', 'Duhet te kyçesh per te vazhduar.');
+        redirect('login');
+    }
+}
+
+function require_admin(): void
+{
+    require_auth();
+    if (!is_admin()) {
+        flash('error', 'Nuk ke leje per panelin e administrimit.');
+        redirect('');
+    }
+}
+
+function verify_form_csrf(): void
+{
+    $token = $_POST['_token'] ?? '';
+    if (!hash_equals($_SESSION['csrf_token'] ?? '', (string) $token)) {
+        http_response_code(419);
+        exit('Sesioni ka skaduar. Rifresko faqen dhe provo perseri.');
+    }
+}
+
+function slugify(string $value): string
+{
+    $value = iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $value) ?: $value;
+    $value = strtolower(trim(preg_replace('/[^a-zA-Z0-9]+/', '-', $value), '-'));
+    return $value !== '' ? $value : 'product-' . time();
+}

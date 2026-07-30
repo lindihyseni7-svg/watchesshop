@@ -1,3 +1,4 @@
+<?php // Shared footer, support links, newsletter form and global toast target. ?>
 </main>
 
 <footer class="store-footer">
@@ -28,7 +29,7 @@
             <a href="<?= e(url('about')); ?>">Rreth nesh</a>
             <a href="<?= e(url('contact')); ?>">Na kontakto</a>
             <a href="<?= e(url('faq')); ?>">Pyetje te shpeshta</a>
-            <a href="<?= e(url('login.php')); ?>">Llogaria ime</a>
+            <a href="<?= e(url('login')); ?>">Llogaria ime</a>
         </div>
 
         <div class="footer-column newsletter">

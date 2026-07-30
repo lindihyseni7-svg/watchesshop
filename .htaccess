@@ -1,9 +1,44 @@
+# Send clean URLs to the PHP front controller while preserving real files/assets.
 Options -Indexes
 RewriteEngine On
+
+# Legacy public URLs.
+RewriteRule ^orat\.php$ /watchesshop/shop [R=302,L,QSD]
+RewriteRule ^shporta\.php$ /watchesshop/cart [R=302,L,QSD]
+RewriteRule ^login\.php$ /watchesshop/login [R=302,L,QSD]
+RewriteRule ^regjistrohu\.php$ /watchesshop/register [R=302,L,QSD]
+RewriteRule ^shto_ne_shporte\.php$ /watchesshop/cart [R=302,L,QSD]
+RewriteRule ^edito_shporte\.php$ /watchesshop/cart [R=302,L,QSD]
+RewriteRule ^fshi_nga_shporta\.php$ /watchesshop/cart [R=302,L,QSD]
+
+# Legacy admin lists.
+RewriteRule ^perdoruesit\.php$ /watchesshop/admin/users [R=302,L,QSD]
+RewriteRule ^kategorite\.php$ /watchesshop/admin/categories [R=302,L,QSD]
+RewriteRule ^brendet\.php$ /watchesshop/admin/brands [R=302,L,QSD]
+RewriteRule ^ofertat\.php$ /watchesshop/admin/offers [R=302,L,QSD]
+
+# Legacy create/edit forms preserve their old record identifiers.
+RewriteCond %{QUERY_STRING} (?:^|&)pid=([0-9]+)(?:&|$)
+RewriteRule ^shto_modifiko_perdorues\.php$ /watchesshop/admin/users/%1/edit [R=302,L,QSD]
+RewriteRule ^shto_modifiko_perdorues\.php$ /watchesshop/admin/users/create [R=302,L,QSD]
+RewriteCond %{QUERY_STRING} (?:^|&)kid=([0-9]+)(?:&|$)
+RewriteRule ^shto_modifiko_kategori\.php$ /watchesshop/admin/categories/%1/edit [R=302,L,QSD]
+RewriteRule ^shto_modifiko_kategori\.php$ /watchesshop/admin/categories/create [R=302,L,QSD]
+RewriteCond %{QUERY_STRING} (?:^|&)brendetid=([0-9]+)(?:&|$)
+RewriteRule ^shto_modifiko_brend\.php$ /watchesshop/admin/brands/%1/edit [R=302,L,QSD]
+RewriteRule ^shto_modifiko_brend\.php$ /watchesshop/admin/brands/create [R=302,L,QSD]
+RewriteCond %{QUERY_STRING} (?:^|&)ofertaid=([0-9]+)(?:&|$)
+RewriteRule ^shto_modifiko_ofert\.php$ /watchesshop/admin/offers/%1/edit [R=302,L,QSD]
+RewriteRule ^shto_modifiko_ofert\.php$ /watchesshop/admin/offers/create [R=302,L,QSD]
+
+# Legacy delete pages now point to POST-only CRUD lists.
+RewriteRule ^fshijperdorues\.php$ /watchesshop/admin/users [R=302,L,QSD]
+RewriteRule ^fshijkategori\.php$ /watchesshop/admin/categories [R=302,L,QSD]
+RewriteRule ^fshijbrend\.php$ /watchesshop/admin/brands [R=302,L,QSD]
+RewriteRule ^fshijofert\.php$ /watchesshop/admin/offers [R=302,L,QSD]
 
 RewriteCond %{REQUEST_FILENAME} -f [OR]
 RewriteCond %{REQUEST_FILENAME} -d
 RewriteRule ^ - [L]
 
 RewriteRule ^ index.php [QSA,L]
-

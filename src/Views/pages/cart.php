@@ -1,3 +1,4 @@
+<?php // AJAX-enabled shopping cart and order summary. ?>
 <section class="page-hero compact light-hero">
     <span class="kicker dark">Porosia</span>
     <h1>Shporta jote</h1>
@@ -47,4 +48,3 @@
         </aside>
     <?php endif; ?>
 </section>
-

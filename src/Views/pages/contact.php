@@ -1,3 +1,4 @@
+<?php // Contact information and database-backed message form. ?>
 <section class="page-hero compact">
     <span class="kicker">Kontakti</span>
     <h1>Flasim per oren tende te ardhshme.</h1>

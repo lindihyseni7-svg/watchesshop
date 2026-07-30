@@ -1,3 +1,4 @@
+<?php // Frequently asked questions using accessible native details elements. ?>
 <section class="page-hero compact light-hero">
     <span class="kicker dark">Ndihma</span>
     <h1>Pyetje te shpeshta</h1>
@@ -25,4 +26,3 @@
         <?php endforeach; ?>
     </div>
 </section>
-

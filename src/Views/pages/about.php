@@ -1,3 +1,4 @@
+<?php // Brand story and service values. ?>
 <section class="story-hero">
     <img src="<?= e(url('img/pikat.jpg')); ?>" alt="Koleksioni Watches Prishtina">
     <div><span class="kicker">Qe nga Prishtina</span><h1>Ora e duhur behet pjese e historise tende.</h1></div>
@@ -23,4 +24,3 @@
     <article><i data-lucide="messages-square"></i><div><strong>Komunikim real</strong><span>Pa presion, pa komplikime</span></div></article>
     <article><i data-lucide="watch"></i><div><strong>Pasion per oren</strong><span>Detajet kane rendesi</span></div></article>
 </section>
-

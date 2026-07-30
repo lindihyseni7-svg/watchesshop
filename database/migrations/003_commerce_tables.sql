@@ -1,3 +1,4 @@
+-- Add customer communication and the order persistence foundation.
 CREATE TABLE IF NOT EXISTS contact_messages (
     id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
     name VARCHAR(120) NOT NULL,

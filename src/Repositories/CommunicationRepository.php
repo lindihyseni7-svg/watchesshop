@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Repositories;
 
+// Persists contact requests and newsletter subscriptions.
 use App\Core\Database;
 use mysqli_sql_exception;
 
@@ -27,4 +28,3 @@ final class CommunicationRepository
         $stmt->execute();
     }
 }
-

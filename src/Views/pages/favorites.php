@@ -1,3 +1,4 @@
+<?php // Customer favorite products resolved from the current session. ?>
 <section class="page-hero compact light-hero">
     <span class="kicker dark">Lista personale</span>
     <h1>Te preferuarat</h1>
@@ -18,4 +19,3 @@
         </div>
     <?php endif; ?>
 </section>
-

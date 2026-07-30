@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Services;
 
+// Keeps cart quantities in session and resolves live product pricing from the database.
 use App\Repositories\ProductRepository;
 
 final class CartService
@@ -53,4 +54,3 @@ final class CartService
         return compact('items', 'total');
     }
 }
-

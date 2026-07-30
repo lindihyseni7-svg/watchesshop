@@ -6,6 +6,7 @@ namespace App\Core;
 use mysqli;
 use RuntimeException;
 
+// Provides one utf8mb4 MySQL connection for the request lifecycle.
 final class Database
 {
     private static ?mysqli $connection = null;
@@ -31,4 +32,3 @@ final class Database
         return self::$connection;
     }
 }
-

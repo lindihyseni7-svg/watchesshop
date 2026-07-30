@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Repositories;
 
+// Product catalog queries, filtering, sorting, pagination and detail retrieval.
 use App\Core\Database;
 use mysqli;
 
@@ -173,4 +174,3 @@ final class ProductRepository
         return $indexed;
     }
 }
-

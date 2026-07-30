@@ -1,3 +1,4 @@
+-- Expand the original four-column watch table into a searchable ecommerce catalog.
 ALTER TABLE orat
     ADD COLUMN IF NOT EXISTS slug VARCHAR(180) NULL AFTER id,
     ADD COLUMN IF NOT EXISTS brand VARCHAR(100) NOT NULL DEFAULT '' AFTER slug,
