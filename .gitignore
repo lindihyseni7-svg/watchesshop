@@ -22,5 +22,6 @@ uploads/
 
 # Database dumps and local backups
 *.sql
+!database/migrations/*.sql
 *.bak
 *.zip
