@@ -1,15 +1,3 @@
-﻿-- Watches Prishtina one-file installer for InfinityFree/shared hosting.
--- Import this into an empty MySQL database from phpMyAdmin.
--- It contains the base schema first, then the versioned migrations.
-
-
--- ============================================================
--- Source: database\deploy\000_base_schema.sql
--- ============================================================
-
--- Fresh-install schema for shared hosting before running the numbered migrations.
--- Import this first on InfinityFree when the database is empty.
-
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
@@ -88,10 +76,6 @@ INSERT IGNORE INTO orat (id, emri, modeli, cmimi) VALUES
 SET FOREIGN_KEY_CHECKS = 1;
 
 
--- ============================================================
--- Source: C:\xampp\htdocs\watchesshop\database\migrations\001_expand_catalog.sql
--- ============================================================
-
 -- Expand the original four-column watch table into a searchable ecommerce catalog.
 ALTER TABLE orat
     ADD COLUMN IF NOT EXISTS slug VARCHAR(180) NULL AFTER id,
@@ -168,10 +152,6 @@ CREATE INDEX IF NOT EXISTS idx_orat_brand ON orat (brand);
 CREATE INDEX IF NOT EXISTS idx_orat_catalog ON orat (is_new, popularity, discount_percent, cmimi);
 
 
--- ============================================================
--- Source: C:\xampp\htdocs\watchesshop\database\migrations\002_product_image_mapping.sql
--- ============================================================
-
 -- Match seeded products to local watch photography and correct catalog naming.
 UPDATE orat SET image = CASE slug
     WHEN 'rolex-submariner-116610' THEN 'img/o34.jpg'
@@ -204,10 +184,6 @@ SET slug = 'citizen-tsuyosa-blue',
     pershkrimi = 'Ore automatike energjike me bracelet te integruar dhe dial te kalter.'
 WHERE slug = 'citizen-tsuyosa-yellow';
 
-
--- ============================================================
--- Source: C:\xampp\htdocs\watchesshop\database\migrations\003_commerce_tables.sql
--- ============================================================
 
 -- Add customer communication and the order persistence foundation.
 CREATE TABLE IF NOT EXISTS contact_messages (
@@ -265,10 +241,6 @@ CREATE TABLE IF NOT EXISTS order_items (
     CONSTRAINT fk_order_items_product FOREIGN KEY (product_id) REFERENCES orat (id) ON DELETE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
-
--- ============================================================
--- Source: C:\xampp\htdocs\watchesshop\database\migrations\004_auth_admin_catalog.sql
--- ============================================================
 
 -- Normalize authentication, relate products to admin entities and extend the catalog.
 ALTER TABLE perdoruesit
@@ -344,4 +316,3 @@ VALUES
 
 CREATE INDEX IF NOT EXISTS idx_orat_category ON orat (category_id);
 CREATE INDEX IF NOT EXISTS idx_orat_offer ON orat (offer_id);
-
