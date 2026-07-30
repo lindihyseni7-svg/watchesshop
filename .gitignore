@@ -1,0 +1,26 @@
+# Local environment
+.env
+.env.*
+!.env.example
+
+# OS/editor files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# PHP dependencies and tooling
+vendor/
+composer.phar
+
+# Logs/cache/uploads generated locally
+*.log
+logs/
+cache/
+tmp/
+uploads/
+
+# Database dumps and local backups
+*.sql
+*.bak
+*.zip
