@@ -83,7 +83,11 @@ $brandImages = ['Breitling' => 'img/o28.jpg', 'Bulova' => 'img/o12.jpg', 'Cartie
     </div>
 </section>
 
-<section class="brand-marquee">
+<section class="brand-marquee" aria-label="Brendet">
+    <div class="brand-marquee-heading">
+        <span class="kicker dark">Brendet</span>
+        <strong>Ikona qe levizin me koleksionin</strong>
+    </div>
     <div class="brand-track">
         <?php foreach (array_merge($brands, $brands) as $brand): ?>
             <?php $brandImage = $brandImages[$brand['brand']] ?? 'img/o0.jpg'; ?>
