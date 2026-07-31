@@ -37,9 +37,18 @@ function asset(string $path): string
     return url('public/assets/' . ltrim($path, '/'));
 }
 
+function safe_image(?string $path, string $fallback = 'public/assets/images/hero-watches.png'): string
+{
+    $candidate = trim((string) $path);
+    if ($candidate !== '' && is_file(ROOT_PATH . '/' . ltrim($candidate, '/'))) {
+        return url($candidate);
+    }
+    return url($fallback);
+}
+
 function product_image(?string $path): string
 {
-    return url($path ?: 'img/o0.jpg');
+    return safe_image($path ?: 'img/o0.jpg');
 }
 
 function e(mixed $value): string

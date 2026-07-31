@@ -2,8 +2,8 @@
 // Homepage with animated collections, featured products and moving brand rail.
 $heroSlides = [
     ['image' => asset('images/hero-watches.png'), 'label' => 'Koleksioni 2026'],
-    ['image' => url('img/section2.jpg'), 'label' => 'Mjeshteria'],
-    ['image' => url('img/ora4.jpg'), 'label' => 'New in'],
+    ['image' => safe_image('img/section2.jpg'), 'label' => 'Mjeshteria'],
+    ['image' => safe_image('img/ora4.jpg'), 'label' => 'New in'],
 ];
 $brandImages = ['Breitling' => 'img/o28.jpg', 'Bulova' => 'img/o12.jpg', 'Cartier' => 'img/o27.jpg', 'Casio' => 'img/o28.jpg', 'Citizen' => 'img/o25.jpg', 'Frederique Constant' => 'img/o36.jpg', 'Hamilton' => 'img/o26.jpg', 'IWC' => 'img/o21.jpg', 'Longines' => 'img/o23.jpg', 'Mido' => 'img/o19.jpg', 'Nomos' => 'img/a6.jpg', 'Omega' => 'img/o15.jpg', 'Orient' => 'img/o10.jpg', 'Panerai' => 'img/o11.jpg', 'Rado' => 'img/ora2.jpg', 'Rolex' => 'img/o0.jpg', 'Seiko' => 'img/o20.jpg', 'TAG Heuer' => 'img/o21.jpg', 'Tissot' => 'img/o17.jpg', 'Tudor' => 'img/o34.jpg', 'Zenith' => 'img/o38.jpg'];
 ?>
@@ -56,11 +56,11 @@ $brandImages = ['Breitling' => 'img/o28.jpg', 'Bulova' => 'img/o12.jpg', 'Cartie
 <section class="editorial-band">
     <div class="editorial-image">
         <div class="editorial-motion" aria-hidden="true">
-            <img src="<?= e(url('img/section2.jpg')); ?>" alt="">
-            <img src="<?= e(url('img/pikat.jpg')); ?>" alt="">
-            <img src="<?= e(url('img/ora4.jpg')); ?>" alt="">
+            <img src="<?= e(safe_image('img/section2.jpg')); ?>" alt="">
+            <img src="<?= e(safe_image('img/pikat.jpg')); ?>" alt="">
+            <img src="<?= e(safe_image('img/ora4.jpg')); ?>" alt="">
         </div>
-        <img src="<?= e(url('img/section2.jpg')); ?>" alt="Detaje te ores premium">
+        <img src="<?= e(safe_image('img/section2.jpg')); ?>" alt="Detaje te ores premium">
     </div>
     <div class="editorial-copy">
         <span class="kicker">Mjeshteria</span>
@@ -88,7 +88,7 @@ $brandImages = ['Breitling' => 'img/o28.jpg', 'Bulova' => 'img/o12.jpg', 'Cartie
         <?php foreach (array_merge($brands, $brands) as $brand): ?>
             <?php $brandImage = $brandImages[$brand['brand']] ?? 'img/o0.jpg'; ?>
             <a href="<?= e(url('shop?brand=' . rawurlencode($brand['brand']))); ?>">
-                <img src="<?= e(url($brandImage)); ?>" alt="">
+                <img src="<?= e(safe_image($brandImage)); ?>" alt="">
                 <span><?= e(strtoupper($brand['brand'])); ?></span>
                 <small><?= (int) $brand['total']; ?> modele</small>
             </a>

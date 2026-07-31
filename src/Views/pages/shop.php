@@ -1,8 +1,8 @@
 <?php // Filterable and paginated product catalog. ?>
 <section class="page-hero compact catalog-hero">
     <div class="catalog-hero-media" aria-hidden="true">
-        <img src="<?= e(url('img/ora4.jpg')); ?>" alt="">
-        <img src="<?= e(url('img/o0.jpg')); ?>" alt="">
+        <img src="<?= e(safe_image('img/ora4.jpg')); ?>" alt="">
+        <img src="<?= e(safe_image('img/o0.jpg')); ?>" alt="">
     </div>
     <div class="catalog-hero-copy">
         <span class="kicker">Katalogu</span>

@@ -5,7 +5,7 @@ $errors = $errors ?? [];
 ?>
 <section class="auth-shell">
     <div class="auth-visual register-visual">
-        <img src="<?= e(url('img/section2.jpg')); ?>" alt="Dyqani Watches Prishtina">
+        <img src="<?= e(safe_image('img/section2.jpg')); ?>" alt="Dyqani Watches Prishtina">
         <div><span class="kicker">Anetaresohu</span><h1>Koleksioni yt fillon ketu.</h1></div>
     </div>
     <div class="auth-form-panel">
