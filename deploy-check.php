@@ -12,6 +12,8 @@ echo "PHP: " . PHP_VERSION . "\n";
 echo "Project root: ok\n";
 echo "Config file: " . (is_file(ROOT_PATH . '/config/database.php') ? 'found' : 'missing') . "\n";
 echo "Session status: " . (session_status() === PHP_SESSION_ACTIVE ? 'active' : 'inactive') . "\n";
+echo "About image pikat.jpg: " . (is_file(ROOT_PATH . '/img/pikat.jpg') ? 'found' : 'missing') . "\n";
+echo "About image section2.jpg: " . (is_file(ROOT_PATH . '/img/section2.jpg') ? 'found' : 'missing') . "\n";
 
 try {
     $db = App\Core\Database::connection();
@@ -30,6 +32,22 @@ try {
         echo "Demo admin role: " . $admin['role'] . "\n";
         echo "Demo admin password valid: " . (password_verify('admin12345', (string) $admin['fjalekalimi']) ? 'yes' : 'no') . "\n";
     }
+
+    $writeToken = 'deploy-check-' . bin2hex(random_bytes(4));
+    $writeStmt = $db->prepare(
+        'INSERT INTO contact_messages (name, email, subject, message) VALUES (?, ?, ?, ?)'
+    );
+    $writeName = 'Deploy Check';
+    $writeEmail = 'deploy-check@example.com';
+    $writeSubject = 'Write test';
+    $writeMessage = 'Temporary write test ' . $writeToken;
+    $writeStmt->bind_param('ssss', $writeName, $writeEmail, $writeSubject, $writeMessage);
+    $writeStmt->execute();
+    $writeId = (int) $db->insert_id;
+    $deleteStmt = $db->prepare('DELETE FROM contact_messages WHERE id = ?');
+    $deleteStmt->bind_param('i', $writeId);
+    $deleteStmt->execute();
+    echo "Database write test: ok\n";
 
     echo "Status: ready\n";
 } catch (Throwable $exception) {
