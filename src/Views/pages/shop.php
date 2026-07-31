@@ -1,8 +1,14 @@
 <?php // Filterable and paginated product catalog. ?>
-<section class="page-hero compact">
-    <span class="kicker">Katalogu</span>
-    <h1>Gjeje oren tende</h1>
-    <p><?= (int) $catalog['total']; ?> modele te kuruara, nga ikonat klasike te sportivet moderne.</p>
+<section class="page-hero compact catalog-hero">
+    <div class="catalog-hero-media" aria-hidden="true">
+        <img src="<?= e(url('img/ora4.jpg')); ?>" alt="">
+        <img src="<?= e(url('img/o0.jpg')); ?>" alt="">
+    </div>
+    <div class="catalog-hero-copy">
+        <span class="kicker">Katalogu</span>
+        <h1>Gjeje oren tende</h1>
+        <p><?= (int) $catalog['total']; ?> modele te kuruara, nga ikonat klasike te sportivet moderne.</p>
+    </div>
 </section>
 
 <section class="catalog-layout">

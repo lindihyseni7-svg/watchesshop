@@ -251,7 +251,26 @@ h3,
     align-items: center;
     overflow: hidden;
     color: #fff;
-    background: var(--black) url("../images/hero-watches.png") center / cover no-repeat;
+    background: var(--black);
+}
+
+.hero-slides,
+.hero-slide {
+    position: absolute;
+    inset: 0;
+}
+
+.hero-slide {
+    background-position: center;
+    background-size: cover;
+    opacity: 0;
+    transform: scale(1.035);
+    transition: opacity 900ms ease, transform 1800ms ease;
+}
+
+.hero-slide.active {
+    opacity: 1;
+    transform: scale(1);
 }
 
 .hero-overlay {
@@ -312,6 +331,10 @@ h3,
 
 .hero-index span {
     color: rgba(255, 255, 255, 0.5);
+}
+
+.hero-index [data-hero-current] {
+    color: #fff;
 }
 
 .button {
@@ -634,10 +657,51 @@ h3,
     background: #14171b;
 }
 
+.editorial-image {
+    position: relative;
+    overflow: hidden;
+    background: #0f1216;
+}
+
 .editorial-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+.editorial-image > img {
+    position: relative;
+    z-index: 1;
+    opacity: 0.86;
+    mix-blend-mode: screen;
+}
+
+.editorial-motion {
+    position: absolute;
+    inset: 0;
+    display: grid;
+}
+
+.editorial-motion img {
+    grid-area: 1 / 1;
+    opacity: 0;
+    filter: saturate(0.95) contrast(1.04);
+    transform: scale(1.08);
+    animation: editorial-fade 9s ease-in-out infinite;
+}
+
+.editorial-motion img:nth-child(2) {
+    animation-delay: 3s;
+}
+
+.editorial-motion img:nth-child(3) {
+    animation-delay: 6s;
+}
+
+@keyframes editorial-fade {
+    0%, 100% { opacity: 0; transform: scale(1.08); }
+    12%, 31% { opacity: 1; transform: scale(1.01); }
+    43% { opacity: 0; transform: scale(1); }
 }
 
 .editorial-copy {
@@ -675,17 +739,41 @@ h3,
 }
 
 .brand-track a {
-    width: 260px;
-    min-height: 116px;
+    width: 265px;
+    min-height: 138px;
     display: grid;
     place-items: center;
     align-content: center;
-    gap: 7px;
+    gap: 8px;
     border-right: 1px solid var(--line);
     color: #2f343a;
     font-family: "Manrope", sans-serif;
     font-size: 1.18rem;
     font-weight: 800;
+    overflow: hidden;
+}
+
+.brand-track a img {
+    width: 58px;
+    height: 58px;
+    padding: 5px;
+    border: 1px solid #e2e6eb;
+    border-radius: 50%;
+    object-fit: cover;
+    background: #f4f5f6;
+    transition: transform 260ms ease, border-color 260ms ease;
+}
+
+.brand-track a:hover img {
+    border-color: var(--signal);
+    transform: scale(1.08) rotate(-3deg);
+}
+
+.brand-track a span {
+    max-width: 220px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .brand-track small {
@@ -751,6 +839,60 @@ h3,
     color: #fff;
     background: #15191e;
     text-align: center;
+}
+
+.catalog-hero {
+    position: relative;
+    min-height: 420px;
+    align-items: stretch;
+    padding: 0;
+    overflow: hidden;
+    background: #11151a;
+}
+
+.catalog-hero::after {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, rgba(10, 13, 16, 0.94), rgba(10, 13, 16, 0.72) 46%, rgba(10, 13, 16, 0.18));
+    content: "";
+}
+
+.catalog-hero-media {
+    position: absolute;
+    inset: 0;
+    display: grid;
+    grid-template-columns: 1fr 0.82fr;
+}
+
+.catalog-hero-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.catalog-hero-media img:first-child {
+    opacity: 0.74;
+}
+
+.catalog-hero-media img:last-child {
+    opacity: 0.42;
+    mix-blend-mode: screen;
+}
+
+.catalog-hero-copy {
+    position: relative;
+    z-index: 1;
+    width: min(var(--max), calc(100% - 80px));
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin: 0 auto;
+    text-align: left;
+}
+
+.catalog-hero-copy h1,
+.catalog-hero-copy p {
+    max-width: 680px;
 }
 
 .page-hero h1 {
@@ -1661,6 +1803,23 @@ h3,
     border-top: 1px solid #272c32;
     color: #717881;
     font-size: 0.68rem;
+}
+
+.developer-credit {
+    color: #8e959e;
+}
+
+.developer-credit strong {
+    color: #fff;
+}
+
+.developer-credit a {
+    color: #d9b878;
+    font-weight: 800;
+}
+
+.developer-credit a:hover {
+    color: #fff;
 }
 
 .payment-marks {

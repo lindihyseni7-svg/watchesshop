@@ -47,6 +47,7 @@
     <div class="footer-bottom">
         <span>&copy; <?= date('Y'); ?> Watches Prishtina</span>
         <span>Prishtine, Kosove</span>
+        <span class="developer-credit">Zhvilluar nga <strong>Arlind Hyseni</strong> <a href="https://www.arlindhyseni.online" target="_blank" rel="noopener">www.arlindhyseni.online</a></span>
         <div class="payment-marks"><span>VISA</span><span>Mastercard</span><span>PayPal</span></div>
     </div>
 </footer>

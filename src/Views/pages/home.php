@@ -1,8 +1,21 @@
-<?php // Homepage with animated collections, featured products and moving brand rail. ?>
-<section class="home-hero">
+<?php
+// Homepage with animated collections, featured products and moving brand rail.
+$heroSlides = [
+    ['image' => asset('images/hero-watches.png'), 'label' => 'Koleksioni 2026'],
+    ['image' => url('img/section2.jpg'), 'label' => 'Mjeshteria'],
+    ['image' => url('img/ora4.jpg'), 'label' => 'New in'],
+];
+$brandImages = ['Breitling' => 'img/o28.jpg', 'Bulova' => 'img/o12.jpg', 'Cartier' => 'img/o27.jpg', 'Casio' => 'img/o28.jpg', 'Citizen' => 'img/o25.jpg', 'Frederique Constant' => 'img/o36.jpg', 'Hamilton' => 'img/o26.jpg', 'IWC' => 'img/o21.jpg', 'Longines' => 'img/o23.jpg', 'Mido' => 'img/o19.jpg', 'Nomos' => 'img/a6.jpg', 'Omega' => 'img/o15.jpg', 'Orient' => 'img/o10.jpg', 'Panerai' => 'img/o11.jpg', 'Rado' => 'img/ora2.jpg', 'Rolex' => 'img/o0.jpg', 'Seiko' => 'img/o20.jpg', 'TAG Heuer' => 'img/o21.jpg', 'Tissot' => 'img/o17.jpg', 'Tudor' => 'img/o34.jpg', 'Zenith' => 'img/o38.jpg'];
+?>
+<section class="home-hero" data-hero-slider>
+    <div class="hero-slides" aria-hidden="true">
+        <?php foreach ($heroSlides as $index => $slide): ?>
+            <div class="hero-slide <?= $index === 0 ? 'active' : ''; ?>" style="background-image: url('<?= e($slide['image']); ?>')" data-hero-label="<?= e($slide['label']); ?>"></div>
+        <?php endforeach; ?>
+    </div>
     <div class="hero-overlay"></div>
     <div class="hero-copy">
-        <span class="kicker">Koleksioni 2026</span>
+        <span class="kicker" data-hero-kicker>Koleksioni 2026</span>
         <h1>Koha, e zgjedhur mire.</h1>
         <p>Ore me karakter, histori dhe inxhinieri qe zgjat pertej trendeve.</p>
         <div class="hero-actions">
@@ -10,7 +23,7 @@
             <a class="text-link light" href="<?= e(url('shop?sort=newest')); ?>">Zbulo New In <i data-lucide="arrow-right"></i></a>
         </div>
     </div>
-    <div class="hero-index">01 <span>/ 03</span></div>
+    <div class="hero-index"><span data-hero-current>01</span> <span>/ 03</span></div>
 </section>
 
 <section class="moving-gallery" aria-label="Koleksione te zgjedhura">
@@ -42,6 +55,11 @@
 
 <section class="editorial-band">
     <div class="editorial-image">
+        <div class="editorial-motion" aria-hidden="true">
+            <img src="<?= e(url('img/section2.jpg')); ?>" alt="">
+            <img src="<?= e(url('img/pikat.jpg')); ?>" alt="">
+            <img src="<?= e(url('img/ora4.jpg')); ?>" alt="">
+        </div>
         <img src="<?= e(url('img/section2.jpg')); ?>" alt="Detaje te ores premium">
     </div>
     <div class="editorial-copy">
@@ -68,8 +86,10 @@
 <section class="brand-marquee">
     <div class="brand-track">
         <?php foreach (array_merge($brands, $brands) as $brand): ?>
+            <?php $brandImage = $brandImages[$brand['brand']] ?? 'img/o0.jpg'; ?>
             <a href="<?= e(url('shop?brand=' . rawurlencode($brand['brand']))); ?>">
-                <?= e(strtoupper($brand['brand'])); ?>
+                <img src="<?= e(url($brandImage)); ?>" alt="">
+                <span><?= e(strtoupper($brand['brand'])); ?></span>
                 <small><?= (int) $brand['total']; ?> modele</small>
             </a>
         <?php endforeach; ?>
