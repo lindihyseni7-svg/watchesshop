@@ -57,7 +57,7 @@ $brandImages = [
     <div class="section-title-row">
         <div>
             <span class="kicker dark">Te zgjedhurat</span>
-            <h2>Ora qe flasin pa zhurme</h2>
+            <h2>Orat me te shitura</h2>
         </div>
         <a class="text-link" href="<?= e(url('shop?sort=popular')); ?>">Shiko te gjitha <i data-lucide="arrow-right"></i></a>
     </div>

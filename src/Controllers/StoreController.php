@@ -31,7 +31,7 @@ final class StoreController
     {
         render('home', $this->shared([
             'title' => 'Watches Prishtina | Ore premium',
-            'featured' => $this->products->featured(8),
+            'featured' => $this->products->bestSellers(8),
             'newest' => $this->products->newest(8),
             'brands' => $this->products->brands(),
             'stats' => $this->products->stats(),
@@ -41,7 +41,7 @@ final class StoreController
     public function shop(): void
     {
         $filters = [
-            'search' => $_GET['search'] ?? '',
+            'search' => $_GET['search'] ?? $_GET['q'] ?? '',
             'brand' => $_GET['brand'] ?? '',
             'min' => $_GET['min'] ?? '',
             'max' => $_GET['max'] ?? '',

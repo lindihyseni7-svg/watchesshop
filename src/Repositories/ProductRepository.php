@@ -25,6 +25,55 @@ final class ProductRepository
         return $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
     }
 
+    public function bestSellers(int $limit = 8): array
+    {
+        $slugs = [
+            'rolex-sea-dweller-black',
+            'audemars-piguet-royal-oak-offshore',
+            'jacob-co-bugatti-chiron',
+            'rolex-daytona-oysterflex',
+            'diesel-red-iridescent',
+            'bulova-curv-chronograph-blue',
+            'philipp-plein-hexagon-phantom',
+            'gucci-g-timeless-blue',
+        ];
+        $selectedSlugs = array_slice($slugs, 0, max(1, $limit));
+        $placeholders = implode(',', array_fill(0, count($selectedSlugs), '?'));
+        $orderSlugs = implode(',', array_map(
+            fn (string $slug): string => "'" . $this->db->real_escape_string($slug) . "'",
+            $selectedSlugs
+        ));
+        $types = str_repeat('s', count($selectedSlugs));
+
+        $stmt = $this->db->prepare(
+            "SELECT * FROM orat WHERE slug IN ({$placeholders}) ORDER BY FIELD(slug, {$orderSlugs})"
+        );
+        $stmt->bind_param($types, ...$selectedSlugs);
+        $stmt->execute();
+        $products = $stmt->get_result()->fetch_all(MYSQLI_ASSOC);
+
+        if (count($products) >= $limit) {
+            return array_slice($products, 0, $limit);
+        }
+
+        $usedIds = array_map(static fn (array $product): int => (int) $product['id'], $products);
+        $remaining = $limit - count($products);
+        if (!$usedIds) {
+            return $this->featured($limit);
+        }
+
+        $idPlaceholders = implode(',', array_fill(0, count($usedIds), '?'));
+        $idTypes = str_repeat('i', count($usedIds));
+        $fillStmt = $this->db->prepare(
+            "SELECT * FROM orat WHERE id NOT IN ({$idPlaceholders}) ORDER BY popularity DESC, created_at DESC, id DESC LIMIT ?"
+        );
+        $fillParams = [...$usedIds, $remaining];
+        $fillStmt->bind_param($idTypes . 'i', ...$fillParams);
+        $fillStmt->execute();
+
+        return array_merge($products, $fillStmt->get_result()->fetch_all(MYSQLI_ASSOC));
+    }
+
     public function newest(int $limit = 8): array
     {
         $sql = "SELECT * FROM orat ORDER BY is_new DESC, created_at DESC, id DESC LIMIT ?";
@@ -85,10 +134,10 @@ final class ProductRepository
 
         $search = trim((string) ($filters['search'] ?? ''));
         if ($search !== '') {
-            $where[] = '(emri LIKE ? OR modeli LIKE ? OR brand LIKE ? OR pershkrimi LIKE ?)';
+            $where[] = '(emri LIKE ? OR modeli LIKE ? OR brand LIKE ? OR pershkrimi LIKE ? OR historia LIKE ? OR movement LIKE ? OR material LIKE ? OR water_resistance LIKE ? OR slug LIKE ?)';
             $like = '%' . $search . '%';
-            array_push($params, $like, $like, $like, $like);
-            $types .= 'ssss';
+            array_push($params, $like, $like, $like, $like, $like, $like, $like, $like, $like);
+            $types .= 'sssssssss';
         }
 
         $brand = trim((string) ($filters['brand'] ?? ''));

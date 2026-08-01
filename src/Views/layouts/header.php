@@ -5,6 +5,7 @@ $title = $title ?? 'Watches Prishtina';
 $cartCount = $cartCount ?? 0;
 $favoriteCount = $favoriteCount ?? 0;
 $flashMessage = pull_flash();
+$navSearch = trim((string) ($_GET['search'] ?? $_GET['q'] ?? ''));
 ?>
 <!doctype html>
 <html lang="sq">
@@ -54,9 +55,11 @@ $flashMessage = pull_flash();
         </nav>
 
         <div class="nav-actions">
-            <a class="icon-button" href="<?= e(url('shop')); ?>" aria-label="Kerko">
-                <i data-lucide="search"></i>
-            </a>
+            <form class="nav-search" method="get" action="<?= e(url('shop')); ?>" role="search">
+                <label class="sr-only" for="nav-search-input">Kerko ne katalog</label>
+                <input id="nav-search-input" type="search" name="search" value="<?= e($navSearch); ?>" placeholder="Kerko ore, brend, model..." autocomplete="off">
+                <button type="submit" aria-label="Kerko"><i data-lucide="search"></i></button>
+            </form>
             <a class="icon-button" href="<?= e(url('favorites')); ?>" aria-label="Lista e deshirave">
                 <i data-lucide="heart"></i>
                 <span class="action-count" data-favorites-count <?= $favoriteCount ? '' : 'hidden'; ?>><?= (int) $favoriteCount; ?></span>

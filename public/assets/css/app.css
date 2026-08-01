@@ -120,6 +120,7 @@ h3,
 }
 
 .nav-shell {
+    position: relative;
     width: min(var(--max), calc(100% - 48px));
     min-height: 76px;
     display: grid;
@@ -195,8 +196,63 @@ h3,
 
 .nav-actions {
     display: flex;
+    align-items: center;
     justify-content: flex-end;
     gap: 6px;
+}
+
+.nav-search {
+    width: clamp(210px, 18vw, 310px);
+    height: 42px;
+    display: flex;
+    align-items: center;
+    border: 1px solid transparent;
+    background: rgba(244, 245, 246, 0.72);
+    transition: width 180ms ease, border-color 180ms ease, background 180ms ease;
+}
+
+.nav-search:focus-within {
+    border-color: rgba(181, 138, 66, 0.58);
+    background: #fff;
+    box-shadow: 0 10px 30px rgba(11, 13, 16, 0.08);
+}
+
+.nav-search input {
+    min-width: 0;
+    width: 100%;
+    height: 100%;
+    padding: 0 8px 0 14px;
+    border: 0;
+    outline: 0;
+    background: transparent;
+    color: var(--ink);
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
+.nav-search input::placeholder {
+    color: #858b94;
+}
+
+.nav-search button {
+    width: 42px;
+    height: 42px;
+    display: grid;
+    flex: 0 0 42px;
+    place-items: center;
+    border: 0;
+    background: transparent;
+    cursor: pointer;
+}
+
+.nav-search button:hover {
+    background: var(--soft);
+}
+
+.nav-search svg {
+    width: 19px;
+    height: 19px;
+    stroke-width: 1.8;
 }
 
 .nav-logout {
@@ -3076,8 +3132,31 @@ h3,
         font-size: 1rem;
     }
 
-    .nav-actions .icon-button:first-child {
-        display: none;
+    .nav-search {
+        width: 44px;
+        background: transparent;
+    }
+
+    .nav-search input {
+        width: 0;
+        padding: 0;
+        opacity: 0;
+        pointer-events: none;
+    }
+
+    .nav-search:focus-within {
+        position: absolute;
+        right: 0;
+        width: min(420px, calc(100vw - 36px));
+        background: #fff;
+        z-index: 80;
+    }
+
+    .nav-search:focus-within input {
+        width: 100%;
+        padding: 0 8px 0 14px;
+        opacity: 1;
+        pointer-events: auto;
     }
 
     .hero-copy,
