@@ -1,5 +1,5 @@
 <?php
-// Homepage with premium video hero, curated product rails and editorial sections.
+// Homepage with premium image hero, curated product rails and editorial sections.
 $brandImages = [
     'Alpina' => 'img/alpina-pink-card.webp',
     'Breitling' => 'img/o0.jpg',
@@ -25,10 +25,7 @@ $brandImages = [
     'Zenith' => 'img/o1.jpg',
 ];
 ?>
-<section class="home-hero video-hero">
-    <video class="hero-video" autoplay muted loop playsinline preload="auto" data-hero-video aria-hidden="true">
-        <source src="<?= e(asset('media/intro-video.mp4')); ?>" type="video/mp4">
-    </video>
+<section class="home-hero image-hero" style="background-image: url('<?= e(asset('images/hero-watches.png')); ?>');">
     <div class="hero-overlay"></div>
     <div class="hero-copy">
         <span class="kicker">Watches Prishtina</span>

@@ -255,6 +255,8 @@ h3,
     overflow: hidden;
     color: #fff;
     background: var(--black);
+    background-position: center;
+    background-size: cover;
 }
 
 .hero-slides,
@@ -280,6 +282,10 @@ h3,
     opacity: 0.62;
 }
 
+.hero-video.is-unavailable {
+    display: none;
+}
+
 .hero-slide {
     background-position: center;
     background-size: cover;
@@ -303,6 +309,12 @@ h3,
     background:
         linear-gradient(90deg, rgba(5, 7, 9, 0.96), rgba(5, 7, 9, 0.64) 43%, rgba(5, 7, 9, 0.28)),
         linear-gradient(0deg, rgba(5, 7, 9, 0.72), transparent 48%);
+}
+
+.image-hero .hero-overlay {
+    background:
+        linear-gradient(90deg, rgba(5, 7, 9, 0.94), rgba(5, 7, 9, 0.58) 46%, rgba(5, 7, 9, 0.16)),
+        linear-gradient(0deg, rgba(5, 7, 9, 0.64), transparent 52%);
 }
 
 .hero-copy {

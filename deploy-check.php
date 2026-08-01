@@ -14,6 +14,15 @@ echo "Config file: " . (is_file(ROOT_PATH . '/config/database.php') ? 'found' : 
 echo "Session status: " . (session_status() === PHP_SESSION_ACTIVE ? 'active' : 'inactive') . "\n";
 echo "About image pikat.jpg: " . (is_file(ROOT_PATH . '/img/pikat.jpg') ? 'found' : 'missing') . "\n";
 echo "Showcase image showcase-section.jpg: " . (is_file(ROOT_PATH . '/img/showcase-section.jpg') ? 'found' : 'missing') . "\n";
+echo "CSS file app.css: " . (is_file(ROOT_PATH . '/public/assets/css/app.css') ? 'found' : 'missing') . "\n";
+echo "JS file app.js: " . (is_file(ROOT_PATH . '/public/assets/js/app.js') ? 'found' : 'missing') . "\n";
+echo "Hero video intro-video.mp4: " . (is_file(ROOT_PATH . '/public/assets/media/intro-video.mp4') ? 'found' : 'missing') . "\n";
+echo "CSS URL: " . url('public/assets/css/app.css') . "\n";
+echo "JS URL: " . url('public/assets/js/app.js') . "\n";
+echo "Video URL: " . url('public/assets/media/intro-video.mp4') . "\n";
+if (is_file(ROOT_PATH . '/public/assets/media/intro-video.mp4')) {
+    echo "Hero video size MB: " . round(filesize(ROOT_PATH . '/public/assets/media/intro-video.mp4') / 1048576, 2) . "\n";
+}
 
 $requiredImages = [
     'public/assets/images/hero-watches.png',

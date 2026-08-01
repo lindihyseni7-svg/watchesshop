@@ -19,11 +19,13 @@
     const heroVideo = document.querySelector('[data-hero-video]');
     if (heroVideo) {
         const revealHeroVideo = () => heroVideo.classList.add('is-ready');
+        const hideBrokenHeroVideo = () => heroVideo.classList.add('is-unavailable');
         if (heroVideo.readyState >= 2) {
             revealHeroVideo();
         } else {
             heroVideo.addEventListener('loadeddata', revealHeroVideo, { once: true });
             heroVideo.addEventListener('canplay', revealHeroVideo, { once: true });
+            heroVideo.addEventListener('error', hideBrokenHeroVideo, { once: true });
         }
     }
 

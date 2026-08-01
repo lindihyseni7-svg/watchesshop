@@ -273,6 +273,7 @@ ALTER TABLE perdoruesit
 UPDATE perdoruesit
 SET role = CASE
     WHEN LOWER(role) IN ('admin', 'administrator') THEN 'Administrator'
+    WHEN LOWER(role) IN ('demoadmin', 'demo_admin', 'demo-admin', 'demo viewer', 'demo_viewer') THEN 'DemoAdmin'
     ELSE 'Perdorues'
 END;
 
