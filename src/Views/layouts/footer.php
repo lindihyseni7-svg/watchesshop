@@ -1,6 +1,13 @@
 <?php // Shared footer, support links, newsletter form and global toast target. ?>
 </main>
 
+<?php if (str_starts_with(request_path(), '/admin')): ?>
+<div class="toast" data-toast role="status" aria-live="polite"></div>
+</body>
+</html>
+<?php return; ?>
+<?php endif; ?>
+
 <footer class="store-footer">
     <div class="footer-main">
         <div class="footer-intro">
