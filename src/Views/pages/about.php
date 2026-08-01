@@ -2,8 +2,12 @@
 // Brand story and service values.
 ?>
 <section class="story-hero">
-    <img src="<?= e(safe_image('img/pikat.jpg', 'img/section2.jpg')); ?>" alt="Koleksioni Watches Prishtina">
-    <div><span class="kicker">Qe nga Prishtina</span><h1>Ora e duhur behet pjese e historise tende.</h1></div>
+    <img src="<?= e(safe_image('img/showcase-section.jpg')); ?>" alt="Vitrine me koleksion orash ne dyqan">
+    <div>
+        <span class="kicker">Rreth Watches Prishtina</span>
+        <h1>Ora e duhur behet pjese e historise tende.</h1>
+        <a class="button button-light" href="<?= e(url('contact')); ?>">Na kontakto <i data-lucide="arrow-right"></i></a>
+    </div>
 </section>
 
 <section class="story-copy">

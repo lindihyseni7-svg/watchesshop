@@ -4,12 +4,13 @@ declare(strict_types=1);
 // Public storefront and authentication route definitions.
 use App\Controllers\AuthController;
 use App\Controllers\StoreController;
+use App\Content\BlogCatalog;
 use App\Repositories\CommunicationRepository;
 
 $store = new StoreController();
 $auth = new AuthController();
 
-return [
+$routes = [
     'GET /' => fn () => $store->home(),
     'GET /home' => fn () => $store->home(),
     'GET /shop' => fn () => $store->shop(),
@@ -32,6 +33,8 @@ return [
         redirect('contact');
     },
     'GET /faq' => fn () => $store->static('faq', 'Pyetje te shpeshta | Watches Prishtina'),
+    'GET /blog' => fn () => $store->blog(),
+    'GET /sell-watch' => fn () => $store->static('sell-watch', 'Shit oren tende | Watches Prishtina'),
     'GET /login' => fn () => $auth->loginForm(),
     'POST /login' => fn () => $auth->login(),
     'GET /register' => fn () => $auth->registerForm(),
@@ -49,3 +52,10 @@ return [
     },
     'POST /logout' => fn () => $auth->logout(),
 ];
+
+foreach (BlogCatalog::all() as $post) {
+    $slug = $post['slug'];
+    $routes['GET /blog/' . $slug] = fn () => $store->blogPost($slug);
+}
+
+return $routes;

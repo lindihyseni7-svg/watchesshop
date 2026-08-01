@@ -18,9 +18,9 @@ $flashMessage = pull_flash();
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="<?= e(asset('css/app.css')); ?>">
+    <link rel="stylesheet" href="<?= e(asset('css/app.css') . '?v=' . filemtime(ROOT_PATH . '/public/assets/css/app.css')); ?>">
     <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" defer></script>
-    <script src="<?= e(asset('js/app.js')); ?>" defer></script>
+    <script src="<?= e(asset('js/app.js') . '?v=' . filemtime(ROOT_PATH . '/public/assets/js/app.js')); ?>" defer></script>
 </head>
 <body>
 <div class="announcement">
@@ -43,6 +43,8 @@ $flashMessage = pull_flash();
         <nav class="main-nav" data-main-nav>
             <a class="<?= $currentPath === '/' ? 'active' : ''; ?>" href="<?= e(url()); ?>">Ballina</a>
             <a class="<?= $currentPath === '/shop' ? 'active' : ''; ?>" href="<?= e(url('shop')); ?>">Koleksioni</a>
+            <a class="<?= str_starts_with($currentPath, '/blog') ? 'active' : ''; ?>" href="<?= e(url('blog')); ?>">Blog</a>
+            <a class="<?= $currentPath === '/sell-watch' ? 'active' : ''; ?>" href="<?= e(url('sell-watch')); ?>">Shit oren</a>
             <a class="<?= $currentPath === '/about' ? 'active' : ''; ?>" href="<?= e(url('about')); ?>">Rreth nesh</a>
             <a class="<?= $currentPath === '/contact' ? 'active' : ''; ?>" href="<?= e(url('contact')); ?>">Kontakt</a>
             <?php if (is_admin()): ?>

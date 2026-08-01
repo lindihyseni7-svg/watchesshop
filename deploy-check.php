@@ -13,32 +13,32 @@ echo "Project root: ok\n";
 echo "Config file: " . (is_file(ROOT_PATH . '/config/database.php') ? 'found' : 'missing') . "\n";
 echo "Session status: " . (session_status() === PHP_SESSION_ACTIVE ? 'active' : 'inactive') . "\n";
 echo "About image pikat.jpg: " . (is_file(ROOT_PATH . '/img/pikat.jpg') ? 'found' : 'missing') . "\n";
-echo "About image section2.jpg: " . (is_file(ROOT_PATH . '/img/section2.jpg') ? 'found' : 'missing') . "\n";
+echo "Showcase image showcase-section.jpg: " . (is_file(ROOT_PATH . '/img/showcase-section.jpg') ? 'found' : 'missing') . "\n";
 
 $requiredImages = [
     'public/assets/images/hero-watches.png',
-    'img/section2.jpg',
+    'public/assets/media/intro-video.mp4',
+    'img/showcase-section.jpg',
+    'img/kontakti.jpg',
     'img/pikat.jpg',
-    'img/ora4.jpg',
     'img/o0.jpg',
-    'img/o10.jpg',
-    'img/o11.jpg',
-    'img/o12.jpg',
-    'img/o15.jpg',
-    'img/o17.jpg',
-    'img/o19.jpg',
-    'img/o20.jpg',
-    'img/o21.jpg',
-    'img/o23.jpg',
-    'img/o25.jpg',
-    'img/o26.jpg',
-    'img/o27.jpg',
-    'img/o28.jpg',
+    'img/o1.jpg',
+    'img/o2.jpg',
+    'img/o6.jpg',
     'img/o34.jpg',
-    'img/o36.jpg',
-    'img/o38.jpg',
-    'img/ora2.jpg',
-    'img/a6.jpg',
+    'img/oferta.jpg',
+    'img/rolex-sea-dweller-card.webp',
+    'img/bulova-chronograph-card.jpg',
+    'img/bulova-rectangular-card.jpg',
+    'img/philipp-plein-red-card.jpg',
+    'img/philipp-plein-black-card.webp',
+    'img/diesel-blue-card.webp',
+    'img/diesel-red-card.jpg',
+    'img/seiko-black-card.webp',
+    'img/gucci-blue-card.jpg',
+    'img/alpina-pink-card.webp',
+    'img/emporio-armani-diver-card.jpg',
+    'img/smart-watch-card.jpg',
 ];
 $missingImages = array_values(array_filter(
     $requiredImages,

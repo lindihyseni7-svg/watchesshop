@@ -3,6 +3,7 @@
 $discount = (float) $product['discount_percent'];
 $finalPrice = (float) $product['cmimi'] * (1 - $discount / 100);
 $isFavorite = in_array((int) $product['id'], $favoriteIds, true);
+$copy = product_copy($product);
 ?>
 <div class="breadcrumbs">
     <a href="<?= e(url()); ?>">Ballina</a><i data-lucide="chevron-right"></i>
@@ -24,7 +25,7 @@ $isFavorite = in_array((int) $product['id'], $favoriteIds, true);
             <strong>$<?= money($finalPrice); ?></strong>
             <?php if ($discount > 0): ?><del>$<?= money($product['cmimi']); ?></del><span>Kursen <?= (int) $discount; ?>%</span><?php endif; ?>
         </div>
-        <p class="lead"><?= e($product['pershkrimi']); ?></p>
+        <p class="lead"><?= e($copy['description']); ?></p>
 
         <div class="stock-line <?= (int) $product['stock'] > 0 ? 'available' : ''; ?>">
             <span></span><?= (int) $product['stock'] > 0 ? 'Ne stok, gati per dergese' : 'Per momentin nuk ka stok'; ?>
@@ -55,7 +56,7 @@ $isFavorite = in_array((int) $product['id'], $favoriteIds, true);
         <span class="kicker dark">Historia</span>
         <h2>Me shume se matje kohe</h2>
     </div>
-    <p><?= e($product['historia']); ?></p>
+    <p><?= e($copy['story']); ?></p>
 </section>
 
 <section class="spec-section">

@@ -48,7 +48,82 @@ function safe_image(?string $path, string $fallback = 'public/assets/images/hero
 
 function product_image(?string $path): string
 {
-    return safe_image($path ?: 'img/o0.jpg');
+    $candidate = trim((string) $path);
+    $imageMap = [
+        'img/o10.jpg' => 'img/smart-watch-card.jpg',
+        'img/o11.jpg' => 'img/philipp-plein-red-card.jpg',
+        'img/o12.jpg' => 'img/bulova-chronograph-card.jpg',
+        'img/o13.jpg' => 'img/bulova-rectangular-card.jpg',
+        'img/o14.jpg' => 'img/seiko-black-card.webp',
+        'img/o15.jpg' => 'img/rolex-sea-dweller-card.webp',
+        'img/o16.jpg' => 'img/gucci-blue-card.jpg',
+        'img/o17.jpg' => 'img/alpina-pink-card.webp',
+        'img/o18.jpg' => 'img/smart-watch-card.jpg',
+        'img/o19.jpg' => 'img/rolex-sea-dweller-card.webp',
+        'img/o20.jpg' => 'img/seiko-black-card.webp',
+        'img/o21.jpg' => 'img/emporio-armani-diver-card.jpg',
+        'img/o22.jpg' => 'img/o6.jpg',
+        'img/o23.jpg' => 'img/gucci-blue-card.jpg',
+        'img/o24.jpg' => 'img/bulova-rectangular-card.jpg',
+        'img/o25.jpg' => 'img/diesel-blue-card.webp',
+        'img/o26.jpg' => 'img/diesel-red-card.jpg',
+        'img/o27.jpg' => 'img/o1.jpg',
+        'img/o28.jpg' => 'img/philipp-plein-black-card.webp',
+        'img/o29.jpg' => 'img/philipp-plein-black-card.webp',
+        'img/o30.jpg' => 'img/seiko-black-card.webp',
+        'img/o31.jpg' => 'img/philipp-plein-red-card.jpg',
+        'img/o32.jpg' => 'img/smart-watch-card.jpg',
+        'img/o33.jpg' => 'img/diesel-blue-card.webp',
+        'img/o35.jpg' => 'img/bulova-chronograph-card.jpg',
+        'img/o36.jpg' => 'img/alpina-pink-card.webp',
+        'img/o37.jpg' => 'img/emporio-armani-diver-card.jpg',
+        'img/o38.jpg' => 'img/o1.jpg',
+        'img/o39.jpg' => 'img/gucci-blue-card.jpg',
+        'img/ora2.jpg' => 'img/seiko-black-card.webp',
+        'img/ora4.jpg' => 'img/showcase-section.jpg',
+        'img/a6.jpg' => 'img/bulova-rectangular-card.jpg',
+    ];
+
+    return safe_image($imageMap[$candidate] ?? ($candidate ?: 'img/o0.jpg'), 'img/o0.jpg');
+}
+
+function product_copy(array $product): array
+{
+    $curated = [
+        'rolex-submariner-116610' => [
+            'description' => 'Diver profesional me bezel nje-drejtimor, dial me kontrast te larte dhe konstruksion celiku per perdorim serioz ne uje.',
+            'story' => 'Submariner u prezantua si ore instrumentale per zhytje dhe u kthye ne nje nga siluetat me te njohura ne historine e orave. Referenca 116610 ruan proporcionin klasik dhe e kombinon me bezel qeramike dhe mekanizem automatik.',
+        ],
+        'casio-edifice-efr-556' => [
+            'description' => 'Kronograf quartz me dial shumeshtresor, kase celiku dhe tregues te medhenj per lexim te shpejte gjate dites.',
+            'story' => 'Linja Edifice sjell gjuhen e motorsportit ne nje ore te perditshem. EFR-556 fokusohet te funksioni i kronografit, qendrueshmeria dhe pamja teknike pa kerkuar mirembajtje mekanike.',
+        ],
+        'rolex-daytona-116500' => [
+            'description' => 'Kronograf automatik me shkalle tachymeter, totalizues te balancuar dhe identitet te lidhur ngushte me motorsportin.',
+            'story' => 'Cosmograph Daytona u projektua per matjen e kohes dhe shpejtesise ne piste. Referenca 116500 e sjell kete trashegimi me bezel qeramike dhe nje nga konfigurimet me te njohura te dialit modern.',
+        ],
+        'casio-g-shock-ga-2100' => [
+            'description' => 'Ore ana-digjitale rezistente ndaj goditjeve, me profil te holle, kase te lehte dhe rezistence 200 metra ne uje.',
+            'story' => 'GA-2100 bashkon strukturen Carbon Core Guard me nje forme oktagonale moderne. Rezultati eshte nje G-Shock i lehte dhe praktik qe ruan standardin e fortesise se linjes.',
+        ],
+        'rolex-datejust-126200' => [
+            'description' => 'Ore automatike klasike me dritare date, proporcion te balancuar dhe kase celiku per perdorim nga dita ne mbremje.',
+            'story' => 'Datejust krijoi nje formule qe vazhdon prej dekadash: date e lexueshme, dizajn i matur dhe mekanizem automatik. Referenca 126200 e mban kete identitet ne nje interpretim modern dhe te gjithanshem.',
+        ],
+        'casio-vintage-a168wa' => [
+            'description' => 'Ore digjitale retro me ekran te qarte, alarm, kronometer dhe bracelet metalik te lehte per perdorim te perditshem.',
+            'story' => 'A168WA eshte pjese e gjuhes vizuale qe e beri Casio-n ikone te dizajnit digjital. Formati kompakt dhe funksionet e thjeshta e mbajne relevant edhe sot.',
+        ],
+    ];
+
+    $fallbackDescription = trim((string) ($product['pershkrimi'] ?? ''));
+    $fallbackStory = trim((string) ($product['historia'] ?? ''));
+    $specific = $curated[$product['slug'] ?? ''] ?? [];
+
+    return [
+        'description' => $specific['description'] ?? ($fallbackDescription !== '' ? $fallbackDescription : sprintf('%s %s me specifika te zgjedhura per perdorim te perditshem.', $product['brand'] ?? 'Ore', $product['modeli'] ?? '')),
+        'story' => $specific['story'] ?? ($fallbackStory !== '' ? $fallbackStory : sprintf('%s %s perfaqeson gjuhen e dizajnit dhe inxhinierise se markes.', $product['brand'] ?? 'Ky model', $product['modeli'] ?? '')),
+    ];
 }
 
 function e(mixed $value): string

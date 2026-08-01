@@ -1,32 +1,48 @@
 <?php
-// Homepage with animated collections, featured products and moving brand rail.
-$heroSlides = [
-    ['image' => asset('images/hero-watches.png'), 'label' => 'Koleksioni 2026'],
-    ['image' => safe_image('img/section2.jpg'), 'label' => 'Mjeshteria'],
-    ['image' => safe_image('img/ora4.jpg'), 'label' => 'New in'],
+// Homepage with premium video hero, curated product rails and editorial sections.
+$brandImages = [
+    'Alpina' => 'img/alpina-pink-card.webp',
+    'Breitling' => 'img/o0.jpg',
+    'Bulova' => 'img/bulova-chronograph-card.jpg',
+    'Cartier' => 'img/o1.jpg',
+    'Casio' => 'img/smart-watch-card.jpg',
+    'Citizen' => 'img/diesel-blue-card.webp',
+    'Frederique Constant' => 'img/alpina-pink-card.webp',
+    'Hamilton' => 'img/diesel-red-card.jpg',
+    'IWC' => 'img/emporio-armani-diver-card.jpg',
+    'Longines' => 'img/gucci-blue-card.jpg',
+    'Mido' => 'img/o6.jpg',
+    'Nomos' => 'img/bulova-rectangular-card.jpg',
+    'Omega' => 'img/rolex-sea-dweller-card.webp',
+    'Orient' => 'img/smart-watch-card.jpg',
+    'Panerai' => 'img/o6.jpg',
+    'Rado' => 'img/seiko-black-card.webp',
+    'Rolex' => 'img/o34.jpg',
+    'Seiko' => 'img/seiko-black-card.webp',
+    'TAG Heuer' => 'img/emporio-armani-diver-card.jpg',
+    'Tissot' => 'img/alpina-pink-card.webp',
+    'Tudor' => 'img/o34.jpg',
+    'Zenith' => 'img/o1.jpg',
 ];
-$brandImages = ['Breitling' => 'img/o28.jpg', 'Bulova' => 'img/o12.jpg', 'Cartier' => 'img/o27.jpg', 'Casio' => 'img/o28.jpg', 'Citizen' => 'img/o25.jpg', 'Frederique Constant' => 'img/o36.jpg', 'Hamilton' => 'img/o26.jpg', 'IWC' => 'img/o21.jpg', 'Longines' => 'img/o23.jpg', 'Mido' => 'img/o19.jpg', 'Nomos' => 'img/a6.jpg', 'Omega' => 'img/o15.jpg', 'Orient' => 'img/o10.jpg', 'Panerai' => 'img/o11.jpg', 'Rado' => 'img/ora2.jpg', 'Rolex' => 'img/o0.jpg', 'Seiko' => 'img/o20.jpg', 'TAG Heuer' => 'img/o21.jpg', 'Tissot' => 'img/o17.jpg', 'Tudor' => 'img/o34.jpg', 'Zenith' => 'img/o38.jpg'];
 ?>
-<section class="home-hero" data-hero-slider>
-    <div class="hero-slides" aria-hidden="true">
-        <?php foreach ($heroSlides as $index => $slide): ?>
-            <div class="hero-slide <?= $index === 0 ? 'active' : ''; ?>" style="background-image: url('<?= e($slide['image']); ?>')" data-hero-label="<?= e($slide['label']); ?>"></div>
-        <?php endforeach; ?>
-    </div>
+<section class="home-hero video-hero">
+    <video class="hero-video" autoplay muted loop playsinline preload="auto" data-hero-video aria-hidden="true">
+        <source src="<?= e(asset('media/intro-video.mp4')); ?>" type="video/mp4">
+    </video>
     <div class="hero-overlay"></div>
     <div class="hero-copy">
-        <span class="kicker" data-hero-kicker>Koleksioni 2026</span>
-        <h1>Koha, e zgjedhur mire.</h1>
-        <p>Ore me karakter, histori dhe inxhinieri qe zgjat pertej trendeve.</p>
+        <span class="kicker">Watches Prishtina</span>
+        <h1>Koha qe ndihet premium.</h1>
+        <p>Koleksion i kuruar me ora klasike, sportive dhe smart per momente qe kerkojne prezence.</p>
         <div class="hero-actions">
             <a class="button button-light" href="<?= e(url('shop')); ?>">Shfleto koleksionin <i data-lucide="arrow-up-right"></i></a>
-            <a class="text-link light" href="<?= e(url('shop?sort=newest')); ?>">Zbulo New In <i data-lucide="arrow-right"></i></a>
+            <a class="text-link light" href="<?= e(url('shop?discount=1&sort=discount_desc')); ?>">Shiko ofertat <i data-lucide="arrow-right"></i></a>
         </div>
     </div>
-    <div class="hero-index"><span data-hero-current>01</span> <span>/ 03</span></div>
 </section>
 
-<section class="moving-gallery" aria-label="Koleksione te zgjedhura">
+<section class="moving-gallery" aria-label="Koleksione te zgjedhura" data-marquee>
+    <button class="icon-button marquee-toggle" type="button" data-marquee-toggle aria-label="Ndalo levizjen" title="Ndalo levizjen"><i data-lucide="pause"></i></button>
     <div class="gallery-track">
         <?php
         $galleryProducts = array_merge($featured, $featured);
@@ -53,20 +69,71 @@ $brandImages = ['Breitling' => 'img/o28.jpg', 'Bulova' => 'img/o12.jpg', 'Cartie
     </div>
 </section>
 
+<section class="offer-band">
+    <img src="<?= e(safe_image('img/oferta.jpg')); ?>" alt="Ofertat e orave Watches Prishtina">
+    <div class="offer-copy">
+        <div>
+            <span class="kicker">Ofertat</span>
+            <h2>Modele te zgjedhura. Zbritje reale.</h2>
+        </div>
+        <p>Shfleto ofertat aktive ne katalog dhe gjej modelin e duhur me cmim me te mire.</p>
+        <a class="button button-light" href="<?= e(url('shop?discount=1&sort=discount_desc')); ?>">Shiko ofertat <i data-lucide="tag"></i></a>
+    </div>
+</section>
+
 <section class="editorial-band">
     <div class="editorial-image">
-        <div class="editorial-motion" aria-hidden="true">
-            <img src="<?= e(safe_image('img/section2.jpg')); ?>" alt="">
-            <img src="<?= e(safe_image('img/pikat.jpg')); ?>" alt="">
-            <img src="<?= e(safe_image('img/ora4.jpg')); ?>" alt="">
-        </div>
-        <img src="<?= e(safe_image('img/section2.jpg')); ?>" alt="Detaje te ores premium">
+        <img src="<?= e(safe_image('img/pikat.jpg')); ?>" alt="Koleksioni premium i orave">
     </div>
     <div class="editorial-copy">
-        <span class="kicker">Mjeshteria</span>
-        <h2>Nje mekanizem. Qindra pjese. Nje moment perfekt.</h2>
-        <p>Ne zgjedhim modele qe balancojne traditen, precizionin dhe dizajnin. Secila ore kontrollohet para se te arrije tek ju.</p>
+        <span class="kicker">Koleksioni</span>
+        <h2>Nje vitrine e qarte per modele qe meritojne vemendje.</h2>
+        <p>Fotografi te medha, kontrast i paster dhe fokus te ora. Eksperienca eshte ndertuar qe produkti te flase para tekstit.</p>
         <a class="button button-outline-light" href="<?= e(url('about')); ?>">Historia jone <i data-lucide="arrow-right"></i></a>
+    </div>
+</section>
+
+<section class="museum-section">
+    <div class="museum-media">
+        <img src="<?= e(safe_image('img/bulova-heritage-section.png')); ?>" alt="Arkive vizuale Bulova">
+    </div>
+    <div class="museum-copy">
+        <span class="timeline-rule" aria-hidden="true"></span>
+        <span class="kicker dark">Interactive Museum</span>
+        <h2>Historia e ores, e treguar me imazh dhe detaj.</h2>
+        <p>Trashgimia e brendeve si Bulova na kujton se nje ore nuk eshte vetem aksesore. Ajo mban dizajn, teknologji dhe momente qe kalojne nga nje brez te tjetri.</p>
+        <a class="button button-dark" href="<?= e(url('about')); ?>">Me shume <i data-lucide="arrow-right"></i></a>
+    </div>
+</section>
+
+<section class="durability-section">
+    <div class="durability-copy">
+        <span class="kicker dark">Qendrueshmeri</span>
+        <h2>Used by men who do not get days off.</h2>
+        <p>Ora per dite te gjata duhet te jete e lexueshme, solide dhe e rehatshme. Modelet sportive ne katalog jane zgjedhur per materiale te forta, rezistence dhe prezence moderne.</p>
+        <a class="text-link" href="<?= e(url('shop?brand=Casio')); ?>">Shiko modelet sportive <i data-lucide="arrow-right"></i></a>
+    </div>
+    <img src="<?= e(safe_image('img/used-by-men-who-dont-get-days-off.webp')); ?>" alt="Ore sportive e perdorur ne pune te rende">
+</section>
+
+<section class="comparison-section">
+    <div class="comparison-copy">
+        <span class="kicker dark">Materialet</span>
+        <h2>Cfare e ben nje ore te ndihet me e forte?</h2>
+        <p>Kasa, xhami, rripi dhe rezistenca ndaj ujit ndryshojne shume nga modeli ne model. Prandaj ne faqe i japim hapesire detajeve qe klienti te kuptoje pse nje ore kushton dhe zgjat me shume.</p>
+    </div>
+    <img src="<?= e(safe_image('img/tabla-section.webp')); ?>" alt="Tabele krahasimi per materiale dhe rezistence">
+</section>
+
+<section class="release-section">
+    <div class="release-watch">
+        <img src="<?= e(safe_image('img/release-watch-cutout.png')); ?>" alt="Ore automatike me dial blu">
+    </div>
+    <div class="release-copy">
+        <span class="kicker">Join the Watch Pages</span>
+        <h2>Never miss a release</h2>
+        <p>Ruaj oret favorite, ndiq brendet qe pelqen dhe kthehu shpejt te koleksioni kur del dicka e re.</p>
+        <a class="button button-light" href="<?= e(url('register')); ?>">Get started</a>
     </div>
 </section>
 
@@ -83,7 +150,8 @@ $brandImages = ['Breitling' => 'img/o28.jpg', 'Bulova' => 'img/o12.jpg', 'Cartie
     </div>
 </section>
 
-<section class="brand-marquee" aria-label="Brendet">
+<section class="brand-marquee" aria-label="Brendet" data-marquee>
+    <button class="icon-button marquee-toggle" type="button" data-marquee-toggle aria-label="Ndalo levizjen" title="Ndalo levizjen"><i data-lucide="pause"></i></button>
     <div class="brand-marquee-heading">
         <span class="kicker dark">Brendet</span>
         <strong>Ikona qe levizin me koleksionin</strong>

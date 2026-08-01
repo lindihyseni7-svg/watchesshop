@@ -5,7 +5,7 @@
         const path = window.location.pathname;
         const index = path.indexOf('/index.php');
         if (index >= 0) return path.slice(0, index);
-        const known = ['/shop', '/product/', '/favorites', '/cart', '/about', '/contact', '/faq', '/api/'];
+        const known = ['/shop', '/product/', '/favorites', '/cart', '/about', '/contact', '/faq', '/blog', '/sell-watch', '/api/'];
         const match = known.map((part) => path.indexOf(part)).filter((position) => position >= 0).sort((a, b) => a - b)[0];
         return match === undefined ? path.replace(/\/$/, '') : path.slice(0, match);
     })();
@@ -15,6 +15,17 @@
     const icons = () => {
         if (window.lucide) window.lucide.createIcons();
     };
+
+    const heroVideo = document.querySelector('[data-hero-video]');
+    if (heroVideo) {
+        const revealHeroVideo = () => heroVideo.classList.add('is-ready');
+        if (heroVideo.readyState >= 2) {
+            revealHeroVideo();
+        } else {
+            heroVideo.addEventListener('loadeddata', revealHeroVideo, { once: true });
+            heroVideo.addEventListener('canplay', revealHeroVideo, { once: true });
+        }
+    }
 
     const toast = (message) => {
         const element = document.querySelector('[data-toast]');
@@ -40,23 +51,6 @@
         return data;
     };
 
-    const initHeroSlider = () => {
-        const slider = document.querySelector('[data-hero-slider]');
-        if (!slider) return;
-        const slides = [...slider.querySelectorAll('.hero-slide')];
-        const current = slider.querySelector('[data-hero-current]');
-        const kicker = slider.querySelector('[data-hero-kicker]');
-        if (slides.length < 2) return;
-        let index = 0;
-        window.setInterval(() => {
-            slides[index].classList.remove('active');
-            index = (index + 1) % slides.length;
-            slides[index].classList.add('active');
-            if (current) current.textContent = String(index + 1).padStart(2, '0');
-            if (kicker) kicker.textContent = slides[index].dataset.heroLabel || kicker.textContent;
-        }, 2000);
-    };
-
     const setCounter = (selector, count) => {
         document.querySelectorAll(selector).forEach((counter) => {
             counter.textContent = count;
@@ -65,6 +59,17 @@
     };
 
     document.addEventListener('click', async (event) => {
+        const marqueeToggle = event.target.closest('[data-marquee-toggle]');
+        if (marqueeToggle) {
+            const marquee = marqueeToggle.closest('[data-marquee]');
+            const isPaused = marquee?.classList.toggle('is-paused') ?? false;
+            marqueeToggle.setAttribute('aria-label', isPaused ? 'Vazhdo levizjen' : 'Ndalo levizjen');
+            marqueeToggle.setAttribute('title', isPaused ? 'Vazhdo levizjen' : 'Ndalo levizjen');
+            marqueeToggle.innerHTML = `<i data-lucide="${isPaused ? 'play' : 'pause'}"></i>`;
+            icons();
+            return;
+        }
+
         const flashClose = event.target.closest('[data-flash-close]');
         if (flashClose) {
             flashClose.closest('[data-global-flash]')?.remove();
@@ -205,13 +210,26 @@
             const submitButton = form.querySelector('button[type="submit"]');
             if (submitButton) submitButton.disabled = true;
             const payload = Object.fromEntries(new FormData(form).entries());
+            if (form.hasAttribute('data-valuation-form')) {
+                payload.subject = 'Kerkese per vleresim ore';
+                payload.message = [
+                    `Brendi: ${payload.watch_brand || '-'}`,
+                    `Modeli / referenca: ${payload.watch_reference || '-'}`,
+                    `Viti: ${payload.watch_year || '-'}`,
+                    `Gjendja: ${payload.condition || '-'}`,
+                    `Perfshihet: ${payload.included || '-'}`,
+                    `Telefoni: ${payload.phone || '-'}`,
+                    `Fotografite: ${payload.image_link || '-'}`,
+                    `Detaje: ${payload.notes || '-'}`
+                ].join('\n');
+            }
             const endpoint = form.hasAttribute('data-contact-form') ? '/api/contact' : '/api/newsletter';
             try {
                 const data = await request(endpoint, payload);
                 form.reset();
                 toast(data.message);
             } catch (error) {
-                if (form.method && form.action) {
+                if (error instanceof TypeError && form.method && form.action) {
                     form.submit();
                     return;
                 }
@@ -222,6 +240,25 @@
         });
     });
 
+    document.querySelectorAll('[data-faq-search]').forEach((input) => {
+        const items = [...document.querySelectorAll('[data-faq-item]')];
+        const groups = [...document.querySelectorAll('.faq-group')];
+        const emptyState = document.querySelector('[data-faq-empty]');
+        input.addEventListener('input', () => {
+            const query = input.value.trim().toLocaleLowerCase('sq');
+            let visibleItems = 0;
+            items.forEach((item) => {
+                const matches = query === '' || item.textContent.toLocaleLowerCase('sq').includes(query);
+                item.hidden = !matches;
+                if (matches) visibleItems += 1;
+            });
+            groups.forEach((group) => {
+                group.hidden = !group.querySelector('[data-faq-item]:not([hidden])');
+            });
+            if (emptyState) emptyState.hidden = visibleItems > 0;
+        });
+    });
+
     document.addEventListener('keydown', (event) => {
         if (event.key === 'Escape') {
             document.body.classList.remove('menu-open', 'filters-open');
@@ -229,6 +266,5 @@
     });
 
     window.addEventListener('load', icons);
-    initHeroSlider();
     icons();
 })();

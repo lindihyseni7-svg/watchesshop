@@ -29,6 +29,8 @@
             <a href="<?= e(url('about')); ?>">Rreth nesh</a>
             <a href="<?= e(url('contact')); ?>">Na kontakto</a>
             <a href="<?= e(url('faq')); ?>">Pyetje te shpeshta</a>
+            <a href="<?= e(url('blog')); ?>">Blog</a>
+            <a href="<?= e(url('sell-watch')); ?>">Shit oren tende</a>
             <a href="<?= e(url('login')); ?>">Llogaria ime</a>
         </div>
 

@@ -3,6 +3,7 @@
 $isFavorite = in_array((int) $product['id'], $favoriteIds ?? [], true);
 $discount = (float) $product['discount_percent'];
 $finalPrice = (float) $product['cmimi'] * (1 - $discount / 100);
+$stock = (int) ($product['stock'] ?? 0);
 ?>
 <article class="product-card" data-product-card="<?= (int) $product['id']; ?>">
     <div class="product-media">
@@ -28,6 +29,9 @@ $finalPrice = (float) $product['cmimi'] * (1 - $discount / 100);
         <div class="product-price">
             <strong>$<?= money($finalPrice); ?></strong>
             <?php if ($discount > 0): ?><del>$<?= money($product['cmimi']); ?></del><?php endif; ?>
+        </div>
+        <div class="product-stock <?= $stock > 0 ? 'available' : 'unavailable'; ?>">
+            <span></span><?= $stock > 0 ? 'Ne stok' : 'Jashte stokut'; ?>
         </div>
     </div>
 </article>

@@ -1,8 +1,7 @@
 <?php // Filterable and paginated product catalog. ?>
 <section class="page-hero compact catalog-hero">
     <div class="catalog-hero-media" aria-hidden="true">
-        <img src="<?= e(safe_image('img/ora4.jpg')); ?>" alt="">
-        <img src="<?= e(safe_image('img/o0.jpg')); ?>" alt="">
+        <img src="<?= e(safe_image('img/koleksioni-page.jpg')); ?>" alt="">
     </div>
     <div class="catalog-hero-copy">
         <span class="kicker">Katalogu</span>
@@ -80,11 +79,47 @@
             </div>
 
             <?php if ($catalog['pages'] > 1): ?>
-                <nav class="pagination" aria-label="Faqet">
-                    <?php for ($page = 1; $page <= $catalog['pages']; $page++): ?>
-                        <?php $query = array_merge($filters, ['page' => $page]); ?>
-                        <a class="<?= $page === $catalog['page'] ? 'active' : ''; ?>" href="<?= e(url('shop?' . http_build_query($query))); ?>"><?= $page; ?></a>
-                    <?php endfor; ?>
+                <nav class="pagination" aria-label="Faqet e katalogut">
+                    <?php
+                    $currentPage = (int) $catalog['page'];
+                    $totalPages = (int) $catalog['pages'];
+                    $pageUrl = static function (int $page) use ($filters): string {
+                        return url('shop?' . http_build_query(array_merge($filters, ['page' => $page])));
+                    };
+                    $visiblePages = array_values(array_unique(array_filter([
+                        1,
+                        $currentPage - 2,
+                        $currentPage - 1,
+                        $currentPage,
+                        $currentPage + 1,
+                        $currentPage + 2,
+                        $totalPages,
+                    ], static fn (int $page): bool => $page >= 1 && $page <= $totalPages)));
+                    sort($visiblePages);
+                    ?>
+
+                    <?php if ($currentPage > 1): ?>
+                        <a class="pagination-step" href="<?= e($pageUrl($currentPage - 1)); ?>" rel="prev"><i data-lucide="arrow-left"></i><span>Previous</span></a>
+                    <?php else: ?>
+                        <span class="pagination-step disabled" aria-disabled="true"><i data-lucide="arrow-left"></i><span>Previous</span></span>
+                    <?php endif; ?>
+
+                    <div class="pagination-pages">
+                        <?php $previousVisible = 0; ?>
+                        <?php foreach ($visiblePages as $page): ?>
+                            <?php if ($previousVisible && $page > $previousVisible + 1): ?>
+                                <span class="pagination-ellipsis" aria-hidden="true">...</span>
+                            <?php endif; ?>
+                            <a class="<?= $page === $currentPage ? 'active' : ''; ?>" href="<?= e($pageUrl($page)); ?>" <?= $page === $currentPage ? 'aria-current="page"' : ''; ?>><?= $page; ?></a>
+                            <?php $previousVisible = $page; ?>
+                        <?php endforeach; ?>
+                    </div>
+
+                    <?php if ($currentPage < $totalPages): ?>
+                        <a class="pagination-step" href="<?= e($pageUrl($currentPage + 1)); ?>" rel="next"><span>Next</span><i data-lucide="arrow-right"></i></a>
+                    <?php else: ?>
+                        <span class="pagination-step disabled" aria-disabled="true"><span>Next</span><i data-lucide="arrow-right"></i></span>
+                    <?php endif; ?>
                 </nav>
             <?php endif; ?>
         <?php else: ?>

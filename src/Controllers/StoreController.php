@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace App\Controllers;
 
 // Composes storefront pages from repositories and session-backed services.
+use App\Content\BlogCatalog;
 use App\Repositories\ProductRepository;
 use App\Services\CartService;
 use App\Services\FavoriteService;
@@ -88,6 +89,33 @@ final class StoreController
         render('cart', $this->shared([
             'title' => 'Shporta | Watches Prishtina',
             'cart' => $this->cart->details($this->products),
+        ]));
+    }
+
+    public function blog(): void
+    {
+        render('blog', $this->shared([
+            'title' => 'Blog | Watches Prishtina',
+            'posts' => BlogCatalog::all(),
+        ]));
+    }
+
+    public function blogPost(string $slug): void
+    {
+        $post = BlogCatalog::find($slug);
+        if (!$post) {
+            http_response_code(404);
+            render('404', $this->shared(['title' => 'Artikulli nuk u gjet']));
+            return;
+        }
+
+        render('blog-post', $this->shared([
+            'title' => $post['title'] . ' | Watches Prishtina',
+            'post' => $post,
+            'relatedPosts' => array_values(array_filter(
+                BlogCatalog::all(),
+                static fn (array $candidate): bool => $candidate['slug'] !== $slug
+            )),
         ]));
     }
 
