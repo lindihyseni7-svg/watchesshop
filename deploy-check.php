@@ -55,16 +55,27 @@ try {
     echo "Products table count: " . $db->query('SELECT COUNT(*) FROM orat')->fetch_row()[0] . "\n";
     echo "Users table count: " . $db->query('SELECT COUNT(*) FROM perdoruesit')->fetch_row()[0] . "\n";
     echo "Contact table count: " . $db->query('SELECT COUNT(*) FROM contact_messages')->fetch_row()[0] . "\n";
+    echo "Newsletter table count: " . $db->query('SELECT COUNT(*) FROM newsletter_subscribers')->fetch_row()[0] . "\n";
+    echo "Watch sale requests table count: " . $db->query('SELECT COUNT(*) FROM watch_sale_requests')->fetch_row()[0] . "\n";
 
-    $stmt = $db->prepare('SELECT email, role, fjalekalimi FROM perdoruesit WHERE email = ? LIMIT 1');
-    $email = 'admin@watchesshop.test';
-    $stmt->bind_param('s', $email);
+    $stmt = $db->prepare("SELECT email, role, fjalekalimi FROM perdoruesit WHERE email IN ('admin@watchesshop.test', 'admin@watchesshop.com') AND role = 'Administrator' LIMIT 1");
     $stmt->execute();
     $admin = $stmt->get_result()->fetch_assoc();
-    echo "Demo admin exists: " . ($admin ? 'yes' : 'no') . "\n";
+    echo "Full admin account exists: " . ($admin ? 'yes' : 'no') . "\n";
     if ($admin) {
-        echo "Demo admin role: " . $admin['role'] . "\n";
-        echo "Demo admin password valid: " . (password_verify('admin12345', (string) $admin['fjalekalimi']) ? 'yes' : 'no') . "\n";
+        echo "Full admin role: " . $admin['role'] . "\n";
+        echo "Full admin password valid: " . (password_verify('admin12345', (string) $admin['fjalekalimi']) ? 'yes' : 'no') . "\n";
+    }
+
+    $stmt = $db->prepare('SELECT email, role, fjalekalimi FROM perdoruesit WHERE email = ? LIMIT 1');
+    $email = 'demo.admin@watchesshop.test';
+    $stmt->bind_param('s', $email);
+    $stmt->execute();
+    $demoViewer = $stmt->get_result()->fetch_assoc();
+    echo "Read-only demo admin exists: " . ($demoViewer ? 'yes' : 'no') . "\n";
+    if ($demoViewer) {
+        echo "Read-only demo admin role: " . $demoViewer['role'] . "\n";
+        echo "Read-only demo admin password valid: " . (password_verify('DemoAdmin2026!', (string) $demoViewer['fjalekalimi']) ? 'yes' : 'no') . "\n";
     }
 
     $writeToken = 'deploy-check-' . bin2hex(random_bytes(4));

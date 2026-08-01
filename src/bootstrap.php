@@ -183,6 +183,21 @@ function is_admin(): bool
     return ($_SESSION['perdoruesi']['role'] ?? '') === 'Administrator';
 }
 
+function is_demo_admin(): bool
+{
+    return ($_SESSION['perdoruesi']['role'] ?? '') === 'DemoAdmin';
+}
+
+function can_access_admin(): bool
+{
+    return is_admin() || is_demo_admin();
+}
+
+function can_mutate_admin(): bool
+{
+    return is_admin();
+}
+
 function is_authenticated(): bool
 {
     return !empty($_SESSION['perdoruesi']['id']);
@@ -214,7 +229,7 @@ function pull_flash(): ?array
 function require_guest(): void
 {
     if (is_authenticated()) {
-        redirect(is_admin() ? 'admin' : '');
+        redirect(can_access_admin() ? 'admin' : '');
     }
 }
 
@@ -229,9 +244,18 @@ function require_auth(): void
 function require_admin(): void
 {
     require_auth();
-    if (!is_admin()) {
+    if (!can_access_admin()) {
         flash('error', 'Nuk ke leje per panelin e administrimit.');
         redirect('');
+    }
+}
+
+function require_admin_mutation(): void
+{
+    require_admin();
+    if (!can_mutate_admin()) {
+        flash('error', 'Demo admin eshte vetem per shikim. Ky veprim nuk lejohet sepse do te ndryshonte te dhenat reale te projektit; vetem administratori mund te beje ndryshime.');
+        redirect('admin');
     }
 }
 

@@ -11,7 +11,16 @@ $action = $recordId
             <div><span class="kicker dark"><?= $recordId ? 'Modifikim' : 'Regjistrim i ri'; ?></span><h1><?= $recordId ? 'Modifiko ' : 'Shto '; ?><?= e(strtolower($config['singular'])); ?></h1></div>
             <a class="button button-outline" href="<?= e(url('admin/' . $entity)); ?>"><i data-lucide="arrow-left"></i> Kthehu</a>
         </header>
-        <form method="post" action="<?= e($action); ?>" class="admin-form">
+        <?php if (is_demo_admin()): ?>
+            <div class="admin-demo-banner compact">
+                <i data-lucide="lock"></i>
+                <div>
+                    <strong>Ky formular eshte vetem per shikim</strong>
+                    <span>Nese klikon ruaj, sistemi do ta ndaloje veprimin sepse vetem administratori real mund te ndryshoje te dhenat.</span>
+                </div>
+            </div>
+        <?php endif; ?>
+        <form method="post" action="<?= e($action); ?>" class="admin-form <?= is_demo_admin() ? 'readonly-demo' : ''; ?>" <?= is_demo_admin() ? 'data-demo-operation' : ''; ?>>
             <input type="hidden" name="_token" value="<?= e(csrf_token()); ?>">
             <?php if (isset($errors['general'])): ?><div class="form-alert error"><?= e($errors['general']); ?></div><?php endif; ?>
             <div class="admin-form-grid">
@@ -49,7 +58,7 @@ $action = $recordId
                 <?php endforeach; ?>
             </div>
             <div class="admin-form-actions">
-                <button class="button button-dark" type="submit"><i data-lucide="save"></i> Ruaj ndryshimet</button>
+                <button class="button button-dark" type="<?= is_demo_admin() ? 'button' : 'submit'; ?>" <?= is_demo_admin() ? 'data-demo-disabled' : ''; ?>><i data-lucide="<?= is_demo_admin() ? 'lock' : 'save'; ?>"></i> <?= is_demo_admin() ? 'Ndryshimet jane te bllokuara' : 'Ruaj ndryshimet'; ?></button>
                 <a class="button button-outline" href="<?= e(url('admin/' . $entity)); ?>">Anulo</a>
             </div>
         </form>

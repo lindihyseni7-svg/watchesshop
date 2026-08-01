@@ -8,6 +8,11 @@ $adminLinks = [
     'admin/brands' => ['label' => 'Brendet', 'icon' => 'badge'],
     'admin/categories' => ['label' => 'Kategorite', 'icon' => 'layers-3'],
     'admin/offers' => ['label' => 'Ofertat', 'icon' => 'badge-percent'],
+    'admin/messages' => ['label' => 'Mesazhet', 'icon' => 'mail'],
+    'admin/newsletter' => ['label' => 'Newsletter', 'icon' => 'send'],
+    'admin/watch-sale-requests' => ['label' => 'Shitje orash', 'icon' => 'hand-coins'],
+    'admin/orders' => ['label' => 'Porosite', 'icon' => 'receipt-text'],
+    'admin/order-items' => ['label' => 'Order items', 'icon' => 'list-ordered'],
 ];
 ?>
 <aside class="admin-sidebar">
@@ -15,6 +20,7 @@ $adminLinks = [
         <span>Paneli</span>
         <strong><?= e(current_user()['name'] ?? 'Administrator'); ?></strong>
         <small><?= e(current_user()['email'] ?? ''); ?></small>
+        <?php if (is_demo_admin()): ?><em>Read-only demo</em><?php endif; ?>
     </div>
     <nav>
         <?php foreach ($adminLinks as $path => $item): ?>
@@ -26,4 +32,3 @@ $adminLinks = [
     </nav>
     <a class="admin-store-link" href="<?= e(url()); ?>"><i data-lucide="store"></i> Kthehu ne dyqan</a>
 </aside>
-

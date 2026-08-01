@@ -27,4 +27,28 @@ final class CommunicationRepository
         $stmt->bind_param('s', $email);
         $stmt->execute();
     }
+
+    public function saveWatchSaleRequest(array $data): void
+    {
+        $stmt = Database::connection()->prepare(
+            'INSERT INTO watch_sale_requests
+                (name, email, phone, watch_brand, watch_reference, watch_year, watch_condition, included_items, image_link, notes)
+             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
+        );
+        $year = $data['watch_year'] > 0 ? (int) $data['watch_year'] : null;
+        $stmt->bind_param(
+            'sssssissss',
+            $data['name'],
+            $data['email'],
+            $data['phone'],
+            $data['watch_brand'],
+            $data['watch_reference'],
+            $year,
+            $data['watch_condition'],
+            $data['included_items'],
+            $data['image_link'],
+            $data['notes']
+        );
+        $stmt->execute();
+    }
 }

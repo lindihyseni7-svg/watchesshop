@@ -66,7 +66,10 @@ final class AdminRepository
             'categories' => 'kategorite',
             'offers' => 'ofertat',
             'messages' => 'contact_messages',
+            'newsletter' => 'newsletter_subscribers',
+            'watch_sale_requests' => 'watch_sale_requests',
             'orders' => 'orders',
+            'order_items' => 'order_items',
         ];
         $counts = [];
         foreach ($tables as $key => $table) {
@@ -92,4 +95,3 @@ final class AdminRepository
         return $types;
     }
 }
-

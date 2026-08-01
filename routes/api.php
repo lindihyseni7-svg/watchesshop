@@ -74,6 +74,31 @@ return [
         (new CommunicationRepository())->saveMessage($name, $email, $subject, $message);
         json_response(['message' => 'Mesazhi u dergua. Do te kontaktojme se shpejti.']);
     },
+    'POST /api/sell-watch' => function (): never {
+        verify_csrf();
+        $input = json_decode(file_get_contents('php://input'), true) ?: $_POST;
+        $name = trim((string) ($input['name'] ?? ''));
+        $email = filter_var($input['email'] ?? '', FILTER_VALIDATE_EMAIL);
+        $brand = trim((string) ($input['watch_brand'] ?? ''));
+        $reference = trim((string) ($input['watch_reference'] ?? ''));
+        $condition = trim((string) ($input['condition'] ?? ''));
+        if ($name === '' || !$email || $brand === '' || $reference === '' || $condition === '') {
+            json_response(['message' => 'Ploteso emrin, emailin, brendin, referencen dhe gjendjen e ores.'], 422);
+        }
+        (new CommunicationRepository())->saveWatchSaleRequest([
+            'name' => $name,
+            'email' => (string) $email,
+            'phone' => trim((string) ($input['phone'] ?? '')),
+            'watch_brand' => $brand,
+            'watch_reference' => $reference,
+            'watch_year' => (int) ($input['watch_year'] ?? 0),
+            'watch_condition' => $condition,
+            'included_items' => trim((string) ($input['included'] ?? '')),
+            'image_link' => trim((string) ($input['image_link'] ?? '')),
+            'notes' => trim((string) ($input['notes'] ?? '')),
+        ]);
+        json_response(['message' => 'Kerkesa per vleresim u regjistrua. Do te kontaktojme se shpejti.']);
+    },
     'POST /api/newsletter' => function (): never {
         verify_csrf();
         $input = json_decode(file_get_contents('php://input'), true) ?: $_POST;

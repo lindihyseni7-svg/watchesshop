@@ -163,7 +163,7 @@ h3,
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 32px;
+    gap: 24px;
 }
 
 .main-nav a {
@@ -2332,6 +2332,32 @@ h3,
     font-weight: 800;
 }
 
+.back-to-top {
+    min-height: 54px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border-top: 1px solid #272c32;
+    color: #c8cdd3;
+    background: #090b0e;
+    font-size: 0.68rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    transition: color 180ms ease, background 180ms ease;
+}
+
+.back-to-top:hover,
+.back-to-top:focus-visible {
+    color: #fff;
+    background: #11151a;
+}
+
+.back-to-top svg {
+    width: 15px;
+    height: 15px;
+}
+
 .toast {
     position: fixed;
     right: 24px;
@@ -2487,6 +2513,30 @@ h3,
     box-shadow: 0 0 0 3px rgba(23, 26, 31, 0.08);
 }
 
+.demo-login-card {
+    display: grid;
+    gap: 4px;
+    padding: 14px;
+    border: 1px solid #d9c294;
+    background: #fff9ed;
+}
+
+.demo-login-card span,
+.demo-login-card small {
+    color: #8a6a2f;
+    font-size: 0.68rem;
+    font-weight: 800;
+}
+
+.demo-login-card span {
+    text-transform: uppercase;
+}
+
+.demo-login-card strong {
+    color: var(--ink);
+    font-size: 0.82rem;
+}
+
 .account-form small,
 .field-error {
     color: var(--red);
@@ -2568,6 +2618,18 @@ h3,
     text-overflow: ellipsis;
 }
 
+.admin-identity em {
+    width: max-content;
+    margin-top: 8px;
+    padding: 5px 8px;
+    border: 1px solid rgba(217, 184, 120, 0.42);
+    color: #d9b878;
+    font-size: 0.62rem;
+    font-style: normal;
+    font-weight: 800;
+    text-transform: uppercase;
+}
+
 .admin-sidebar nav {
     display: grid;
     gap: 4px;
@@ -2604,6 +2666,43 @@ h3,
 .admin-workspace {
     min-width: 0;
     padding: 48px clamp(24px, 4vw, 64px) 80px;
+}
+
+.admin-demo-banner {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 24px;
+    padding: 16px 18px;
+    border: 1px solid #dec896;
+    color: #5d461b;
+    background: #fff7e7;
+}
+
+.admin-demo-banner.compact {
+    margin-top: -12px;
+}
+
+.admin-demo-banner svg {
+    width: 21px;
+    flex: 0 0 auto;
+    color: #a97c2a;
+}
+
+.admin-demo-banner strong,
+.admin-demo-banner span {
+    display: block;
+}
+
+.admin-demo-banner strong {
+    margin-bottom: 2px;
+    color: #1f2329;
+    font-size: 0.82rem;
+}
+
+.admin-demo-banner span {
+    font-size: 0.74rem;
+    font-weight: 700;
 }
 
 .admin-page-header {
@@ -2766,6 +2865,15 @@ h3,
     margin: 0;
 }
 
+.admin-cell-muted {
+    display: inline-block;
+    max-width: 360px;
+    overflow: hidden;
+    color: var(--muted);
+    text-overflow: ellipsis;
+    vertical-align: middle;
+}
+
 .table-actions .icon-button {
     width: 34px;
     height: 34px;
@@ -2790,6 +2898,11 @@ h3,
     padding: 28px;
     border: 1px solid var(--line);
     background: #fff;
+}
+
+.admin-form.readonly-demo {
+    position: relative;
+    border-color: #dec896;
 }
 
 .admin-form-grid {
@@ -2853,7 +2966,7 @@ h3,
 
 @media (max-width: 1100px) {
     .main-nav {
-        gap: 19px;
+        gap: 14px;
     }
 
     .product-grid {
@@ -3683,6 +3796,7 @@ h3,
 .blog-feature-media {
     min-height: 520px;
     overflow: hidden;
+    background: var(--soft);
 }
 
 .blog-feature-media img {
@@ -3852,6 +3966,7 @@ h3,
     height: 660px;
     margin: 0;
     overflow: hidden;
+    background: var(--soft);
 }
 
 .article-cover img {
@@ -4257,11 +4372,11 @@ h3,
 
 @media (max-width: 1100px) {
     .main-nav {
-        gap: 13px;
+        gap: 12px;
     }
 
     .main-nav a {
-        font-size: 0.74rem;
+        font-size: 0.72rem;
     }
 
     .blog-feature,
@@ -4318,6 +4433,7 @@ h3,
 
     .article-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 48px 20px;
     }
 
     .journal-cta {
@@ -4331,6 +4447,12 @@ h3,
 
     .article-cover {
         height: 480px;
+    }
+
+    .footer-bottom {
+        flex-wrap: wrap;
+        justify-content: center;
+        text-align: center;
     }
 
     .article-layout {
@@ -4426,6 +4548,19 @@ h3,
 
     .article-cover {
         height: 320px;
+    }
+
+    .blog-feature-media,
+    .blog-feature-media img {
+        min-height: 300px;
+    }
+
+    .article-card h2 {
+        font-size: 1.2rem;
+    }
+
+    .back-to-top {
+        min-height: 58px;
     }
 
     .article-body p {

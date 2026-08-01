@@ -23,7 +23,7 @@ if ($method === 'GET' && preg_match('#^/product/([a-z0-9-]+)$#', $path, $matches
     exit;
 }
 
-if (preg_match('#^/admin/([a-z]+)/(\d+)/(edit|delete)$#', $path, $matches)) {
+if (preg_match('#^/admin/([a-z-]+)/(\d+)/(edit|delete)$#', $path, $matches)) {
     $admin = new App\Controllers\AdminController();
     $entity = $matches[1];
     $id = (int) $matches[2];

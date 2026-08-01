@@ -44,6 +44,10 @@ final class AdminController
     {
         require_admin();
         $config = $this->config($entity);
+        if (!empty($config['readonly']) || empty($config['fields'])) {
+            flash('error', 'Kjo tabele eshte vetem per shikim ne panel.');
+            redirect('admin/' . $entity);
+        }
         $record = $id ? $this->repository->find($config['table'], $config['primary_key'], $id) : null;
         if ($id && !$record) {
             flash('error', 'Regjistrimi nuk u gjet.');
@@ -65,7 +69,12 @@ final class AdminController
     {
         require_admin();
         verify_form_csrf();
+        require_admin_mutation();
         $config = $this->config($entity);
+        if (!empty($config['readonly']) || empty($config['fields'])) {
+            flash('error', 'Kjo tabele eshte vetem per shikim.');
+            redirect('admin/' . $entity);
+        }
         $data = [];
         $errors = [];
 
@@ -95,7 +104,7 @@ final class AdminController
             } else {
                 $data['fjalekalimi'] = password_hash((string) $data['fjalekalimi'], PASSWORD_DEFAULT);
             }
-            $data['role'] = $data['role'] === 'Administrator' ? 'Administrator' : 'Perdorues';
+            $data['role'] = in_array($data['role'], ['Administrator', 'DemoAdmin'], true) ? $data['role'] : 'Perdorues';
         }
 
         if ($entity === 'products') {
@@ -130,7 +139,12 @@ final class AdminController
     {
         require_admin();
         verify_form_csrf();
+        require_admin_mutation();
         $config = $this->config($entity);
+        if (!empty($config['readonly'])) {
+            flash('error', 'Kjo tabele eshte vetem per shikim.');
+            redirect('admin/' . $entity);
+        }
         if ($entity === 'users' && $id === (int) (current_user()['id'] ?? 0)) {
             flash('error', 'Nuk mund ta fshish llogarine ku je kycur.');
             redirect('admin/users');
@@ -234,7 +248,7 @@ final class AdminController
                     'email' => ['label' => 'Email', 'type' => 'email', 'required' => true],
                     'telefoni' => ['label' => 'Telefoni'],
                     'nrpersonal' => ['label' => 'Numri personal'],
-                    'role' => ['label' => 'Roli', 'type' => 'select', 'options' => ['Perdorues' => 'Perdorues', 'Administrator' => 'Administrator'], 'required' => true],
+                    'role' => ['label' => 'Roli', 'type' => 'select', 'options' => ['Perdorues' => 'Perdorues', 'DemoAdmin' => 'Demo admin read-only', 'Administrator' => 'Administrator'], 'required' => true],
                     'fjalekalimi' => ['label' => 'Fjalekalimi', 'type' => 'password', 'required' => true, 'help' => 'Ne editim lere bosh per ta ruajtur password-in aktual.'],
                 ],
             ],
@@ -266,6 +280,81 @@ final class AdminController
                     'DataFillimit' => ['label' => 'Data e fillimit', 'type' => 'date', 'required' => true],
                     'DataSkadimit' => ['label' => 'Data e skadimit', 'type' => 'date', 'required' => true],
                 ],
+            ],
+            'messages' => [
+                'label' => 'Mesazhet',
+                'singular' => 'Mesazhi',
+                'table' => 'contact_messages',
+                'primary_key' => 'id',
+                'list' => ['id' => 'ID', 'name' => 'Emri', 'email' => 'Email', 'subject' => 'Subjekti', 'status' => 'Statusi', 'created_at' => 'Data'],
+                'fields' => [
+                    'name' => ['label' => 'Emri', 'required' => true],
+                    'email' => ['label' => 'Email', 'type' => 'email', 'required' => true],
+                    'subject' => ['label' => 'Subjekti', 'required' => true],
+                    'message' => ['label' => 'Mesazhi', 'type' => 'textarea', 'required' => true],
+                    'status' => ['label' => 'Statusi', 'type' => 'select', 'options' => ['new' => 'New', 'read' => 'Read', 'replied' => 'Replied'], 'required' => true],
+                ],
+            ],
+            'newsletter' => [
+                'label' => 'Newsletter',
+                'singular' => 'Abonimi',
+                'table' => 'newsletter_subscribers',
+                'primary_key' => 'id',
+                'list' => ['id' => 'ID', 'email' => 'Email', 'is_active' => 'Aktiv', 'source' => 'Burimi', 'created_at' => 'Data'],
+                'fields' => [
+                    'email' => ['label' => 'Email', 'type' => 'email', 'required' => true],
+                    'is_active' => ['label' => 'Aktiv', 'type' => 'select', 'cast' => 'int', 'options' => [1 => 'Po', 0 => 'Jo'], 'required' => true],
+                    'source' => ['label' => 'Burimi'],
+                ],
+            ],
+            'watch-sale-requests' => [
+                'label' => 'Kerkesat per shitje orash',
+                'singular' => 'Kerkesa',
+                'table' => 'watch_sale_requests',
+                'primary_key' => 'id',
+                'list' => ['id' => 'ID', 'name' => 'Emri', 'email' => 'Email', 'watch_brand' => 'Brendi', 'watch_reference' => 'Referenca', 'watch_condition' => 'Gjendja', 'status' => 'Statusi', 'created_at' => 'Data'],
+                'fields' => [
+                    'name' => ['label' => 'Emri', 'required' => true],
+                    'email' => ['label' => 'Email', 'type' => 'email', 'required' => true],
+                    'phone' => ['label' => 'Telefoni'],
+                    'watch_brand' => ['label' => 'Brendi', 'required' => true],
+                    'watch_reference' => ['label' => 'Modeli / referenca', 'required' => true],
+                    'watch_year' => ['label' => 'Viti', 'type' => 'number', 'cast' => 'nullable_int'],
+                    'watch_condition' => ['label' => 'Gjendja', 'required' => true],
+                    'included_items' => ['label' => 'Cfare perfshihet'],
+                    'image_link' => ['label' => 'Linku i fotove', 'type' => 'url'],
+                    'notes' => ['label' => 'Shenime', 'type' => 'textarea'],
+                    'estimated_value_min' => ['label' => 'Vlera minimale e vleresuar', 'type' => 'number', 'step' => '0.01', 'cast' => 'float'],
+                    'estimated_value_max' => ['label' => 'Vlera maksimale e vleresuar', 'type' => 'number', 'step' => '0.01', 'cast' => 'float'],
+                    'status' => ['label' => 'Statusi', 'type' => 'select', 'options' => ['new' => 'New', 'reviewing' => 'Reviewing', 'offer_sent' => 'Offer sent', 'accepted' => 'Accepted', 'declined' => 'Declined', 'closed' => 'Closed'], 'required' => true],
+                ],
+            ],
+            'orders' => [
+                'label' => 'Porosite',
+                'singular' => 'Porosia',
+                'table' => 'orders',
+                'primary_key' => 'id',
+                'list' => ['id' => 'ID', 'order_number' => 'Nr.', 'customer_name' => 'Klienti', 'customer_email' => 'Email', 'grand_total' => 'Totali', 'status' => 'Statusi', 'created_at' => 'Data'],
+                'fields' => [
+                    'order_number' => ['label' => 'Numri i porosise', 'required' => true],
+                    'customer_name' => ['label' => 'Klienti', 'required' => true],
+                    'customer_email' => ['label' => 'Email', 'type' => 'email', 'required' => true],
+                    'customer_phone' => ['label' => 'Telefoni'],
+                    'shipping_address' => ['label' => 'Adresa', 'type' => 'textarea', 'required' => true],
+                    'subtotal' => ['label' => 'Subtotal', 'type' => 'number', 'step' => '0.01', 'cast' => 'float', 'required' => true],
+                    'shipping_total' => ['label' => 'Transporti', 'type' => 'number', 'step' => '0.01', 'cast' => 'float'],
+                    'grand_total' => ['label' => 'Totali', 'type' => 'number', 'step' => '0.01', 'cast' => 'float', 'required' => true],
+                    'status' => ['label' => 'Statusi', 'type' => 'select', 'options' => ['pending' => 'Pending', 'paid' => 'Paid', 'processing' => 'Processing', 'shipped' => 'Shipped', 'completed' => 'Completed', 'cancelled' => 'Cancelled'], 'required' => true],
+                ],
+            ],
+            'order-items' => [
+                'label' => 'Order items',
+                'singular' => 'Order item',
+                'table' => 'order_items',
+                'primary_key' => 'id',
+                'readonly' => true,
+                'list' => ['id' => 'ID', 'order_id' => 'Order ID', 'product_id' => 'Product ID', 'product_name' => 'Produkti', 'model' => 'Modeli', 'unit_price' => 'Cmimi', 'quantity' => 'Sasia', 'line_total' => 'Totali'],
+                'fields' => [],
             ],
         ];
     }

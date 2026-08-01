@@ -14,7 +14,7 @@ final class BlogCatalog
                 'category' => 'Udhezues',
                 'date' => '28 Korrik 2026',
                 'read_time' => '6 min lexim',
-                'image' => 'img/showcase-section.jpg',
+                'image' => 'img/artikulli-1.jpg',
                 'excerpt' => 'Buxheti, madhesia, mekanizmi dhe stili: kater vendime qe e bejne zgjedhjen shume me te qarte.',
                 'intro' => 'Ora e pare premium nuk duhet zgjedhur vetem nga logoja. Zgjedhja e mire fillon nga menyra si do ta perdorosh, proporcioni ne dore dhe kostoja reale e pronesise.',
                 'sections' => [
@@ -29,7 +29,7 @@ final class BlogCatalog
                 'category' => 'Mekanizma',
                 'date' => '21 Korrik 2026',
                 'read_time' => '5 min lexim',
-                'image' => 'img/bulova-chronograph-card.jpg',
+                'image' => 'img/artikulli-2.jpg',
                 'excerpt' => 'Dy filozofi te ndryshme te matjes se kohes, me avantazhe reale per perdorues te ndryshem.',
                 'intro' => 'Mekanizmi percakton menyren si ora mat kohen, si mire mbahet dhe si ndihet ne perdorim. Asnjera zgjedhje nuk eshte automatikisht me e mire per te gjithe.',
                 'sections' => [
@@ -44,7 +44,7 @@ final class BlogCatalog
                 'category' => 'Teknologji',
                 'date' => '12 Korrik 2026',
                 'read_time' => '7 min lexim',
-                'image' => 'img/used-by-men-who-dont-get-days-off.webp',
+                'image' => 'img/artikulli-3.jpg',
                 'excerpt' => 'Bezel-i, lume, kurora dhe rezistenca ne uje shpjegohen ne gjuhe te thjeshte.',
                 'intro' => 'Nje diver serioz eshte instrument. Edhe kur nuk perdoret per zhytje, standardet e tij sjellin qendrueshmeri, lexueshmeri dhe siguri ne perdorim te perditshem.',
                 'sections' => [
@@ -59,7 +59,7 @@ final class BlogCatalog
                 'category' => 'Histori',
                 'date' => '4 Korrik 2026',
                 'read_time' => '8 min lexim',
-                'image' => 'img/bulova-heritage-section.png',
+                'image' => 'img/artikulli-4.jpg',
                 'excerpt' => 'Nga reklamat e hershme te precizioni elektronik dhe kronografi Lunar Pilot.',
                 'intro' => 'Bulova eshte nje shembull i mire se si nje marke mund te lidhe prodhimin industrial, komunikimin modern dhe inovacionin teknik ne nje identitet te vetem.',
                 'sections' => [
@@ -74,7 +74,7 @@ final class BlogCatalog
                 'category' => 'Kujdes',
                 'date' => '26 Qershor 2026',
                 'read_time' => '4 min lexim',
-                'image' => 'img/kontakti.jpg',
+                'image' => 'img/artikulli-5.jpg',
                 'excerpt' => 'Pastrimi, magnetizmi, uji dhe servisi: zakone te vogla qe zgjasin jeten e ores.',
                 'intro' => 'Kujdesi i mire nuk kerkon ritual te komplikuar. Disa zakone te thjeshta mbrojne kasen, mekanizmin dhe guarnicionet per vite.',
                 'sections' => [
@@ -89,7 +89,7 @@ final class BlogCatalog
                 'category' => 'Udhezues',
                 'date' => '18 Qershor 2026',
                 'read_time' => '6 min lexim',
-                'image' => 'img/tabla-section.webp',
+                'image' => 'img/artikulli-3.jpg',
                 'excerpt' => 'Materiali, xhami, rezerva e energjise dhe rezistenca ne uje pa terminologji te panevojshme.',
                 'intro' => 'Specifikimet kane vlere kur lidhen me perdorimin real. Nje numer me i madh nuk eshte gjithmone me i mire nese e ben oren me te rende ose me te trashe per doren tende.',
                 'sections' => [

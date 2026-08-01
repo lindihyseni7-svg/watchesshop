@@ -59,6 +59,12 @@
     };
 
     document.addEventListener('click', async (event) => {
+        if (event.target.closest('[data-demo-disabled]')) {
+            event.preventDefault();
+            toast('Demo admin eshte vetem per shikim. Ky veprim nuk lejohet sepse do te ndryshonte te dhenat reale; vetem administratori mund ta beje.');
+            return;
+        }
+
         const marqueeToggle = event.target.closest('[data-marquee-toggle]');
         if (marqueeToggle) {
             const marquee = marqueeToggle.closest('[data-marquee]');
@@ -80,6 +86,11 @@
         if (menuButton) {
             document.body.classList.toggle('menu-open');
             return;
+        }
+
+        const navLink = event.target.closest('[data-main-nav] a');
+        if (navLink) {
+            document.body.classList.remove('menu-open');
         }
 
         if (event.target.closest('[data-filter-open]')) {
@@ -204,6 +215,13 @@
         });
     });
 
+    document.querySelectorAll('[data-demo-operation]').forEach((form) => {
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+            toast('Demo admin eshte vetem per shikim. Ruajtja ose fshirja nuk lejohet ne kete llogari.');
+        });
+    });
+
     document.querySelectorAll('[data-newsletter-form], [data-contact-form]').forEach((form) => {
         form.addEventListener('submit', async (event) => {
             event.preventDefault();
@@ -223,7 +241,9 @@
                     `Detaje: ${payload.notes || '-'}`
                 ].join('\n');
             }
-            const endpoint = form.hasAttribute('data-contact-form') ? '/api/contact' : '/api/newsletter';
+            const endpoint = form.hasAttribute('data-valuation-form')
+                ? '/api/sell-watch'
+                : (form.hasAttribute('data-contact-form') ? '/api/contact' : '/api/newsletter');
             try {
                 const data = await request(endpoint, payload);
                 form.reset();

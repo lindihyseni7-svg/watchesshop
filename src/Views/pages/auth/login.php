@@ -20,8 +20,12 @@ $old = $old ?? [];
             <label>Email<input type="email" name="email" value="<?= e($old['email'] ?? ''); ?>" autocomplete="email" required></label>
             <label>Fjalekalimi<input type="password" name="password" autocomplete="current-password" required></label>
             <button class="button button-dark full" type="submit">Kycu <i data-lucide="arrow-right"></i></button>
+            <div class="demo-login-card">
+                <span>Demo admin read-only</span>
+                <strong>demo.admin@watchesshop.test</strong>
+                <small>Password: DemoAdmin2026!</small>
+            </div>
             <p class="form-switch">Nuk ke llogari? <a href="<?= e(url('register')); ?>">Regjistrohu</a></p>
         </form>
     </div>
 </section>
-

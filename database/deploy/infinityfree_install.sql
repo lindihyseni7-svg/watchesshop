@@ -52,7 +52,8 @@ INSERT IGNORE INTO perdoruesit
     (perdoruesiid, emri, mbiemri, email, fjalekalimi, telefoni, nrpersonal, role)
 VALUES
     (1, 'Admin', 'Watches', 'admin@watchesshop.test', '$2y$10$K9p9zPezMmCt5mtl3YhZI.YIjUl6GN3DGGFlDbjGzrS.Z8hJoD8A.', '+38344111222', '1000000001', 'Administrator'),
-    (2, 'Demo', 'User', 'user@watchesshop.test', '$2y$10$svEDOOlWgUf0MMT27TjsuObLQGskRzLG1s4yxB3oUCwBSs1xoV9uG', '+38344111333', '1000000002', 'Perdorues');
+    (2, 'Demo', 'User', 'user@watchesshop.test', '$2y$10$svEDOOlWgUf0MMT27TjsuObLQGskRzLG1s4yxB3oUCwBSs1xoV9uG', '+38344111333', '1000000002', 'Perdorues'),
+    (3, 'Demo', 'Admin', 'demo.admin@watchesshop.test', '$2y$10$PWvvtEB5u9TnxqdtTyyk2uYgTARB0aoEcAjtaJmvcwfu44hJt4vhq', '+38344111444', '1000000003', 'DemoAdmin');
 
 INSERT IGNORE INTO brendet (brendetid, emri, vitthemelimi, vendndodhja, website) VALUES
     (1, 'Rolex', 1905, 'Zvicer', 'https://www.rolex.com'),
@@ -202,9 +203,31 @@ CREATE TABLE IF NOT EXISTS newsletter_subscribers (
     id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
     email VARCHAR(190) NOT NULL,
     is_active TINYINT(1) NOT NULL DEFAULT 1,
+    source VARCHAR(80) NOT NULL DEFAULT 'footer',
     created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (id),
     UNIQUE KEY uq_newsletter_email (email)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE IF NOT EXISTS watch_sale_requests (
+    id BIGINT UNSIGNED NOT NULL AUTO_INCREMENT,
+    name VARCHAR(160) NOT NULL,
+    email VARCHAR(190) NOT NULL,
+    phone VARCHAR(50) NULL,
+    watch_brand VARCHAR(120) NOT NULL,
+    watch_reference VARCHAR(160) NOT NULL,
+    watch_year INT NULL,
+    watch_condition VARCHAR(80) NOT NULL,
+    included_items VARCHAR(160) NULL,
+    image_link VARCHAR(255) NULL,
+    notes TEXT NULL,
+    estimated_value_min DECIMAL(12,2) NULL,
+    estimated_value_max DECIMAL(12,2) NULL,
+    status ENUM('new', 'reviewing', 'offer_sent', 'accepted', 'declined', 'closed') NOT NULL DEFAULT 'new',
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    PRIMARY KEY (id),
+    INDEX idx_watch_sale_status_created (status, created_at),
+    INDEX idx_watch_sale_brand_reference (watch_brand, watch_reference)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 CREATE TABLE IF NOT EXISTS orders (

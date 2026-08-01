@@ -55,7 +55,8 @@ INSERT IGNORE INTO perdoruesit
     (perdoruesiid, emri, mbiemri, email, fjalekalimi, telefoni, nrpersonal, role)
 VALUES
     (1, 'Admin', 'Watches', 'admin@watchesshop.test', '$2y$10$K9p9zPezMmCt5mtl3YhZI.YIjUl6GN3DGGFlDbjGzrS.Z8hJoD8A.', '+38344111222', '1000000001', 'Administrator'),
-    (2, 'Demo', 'User', 'user@watchesshop.test', '$2y$10$svEDOOlWgUf0MMT27TjsuObLQGskRzLG1s4yxB3oUCwBSs1xoV9uG', '+38344111333', '1000000002', 'Perdorues');
+    (2, 'Demo', 'User', 'user@watchesshop.test', '$2y$10$svEDOOlWgUf0MMT27TjsuObLQGskRzLG1s4yxB3oUCwBSs1xoV9uG', '+38344111333', '1000000002', 'Perdorues'),
+    (3, 'Demo', 'Admin', 'demo.admin@watchesshop.test', '$2y$10$PWvvtEB5u9TnxqdtTyyk2uYgTARB0aoEcAjtaJmvcwfu44hJt4vhq', '+38344111444', '1000000003', 'DemoAdmin');
 
 INSERT IGNORE INTO brendet (brendetid, emri, vitthemelimi, vendndodhja, website) VALUES
     (1, 'Rolex', 1905, 'Zvicer', 'https://www.rolex.com'),

@@ -81,9 +81,13 @@ final class AuthService
 
     private function normalizeRole(string $role): string
     {
-        return in_array(strtolower($role), ['admin', 'administrator'], true)
-            ? 'Administrator'
-            : 'Perdorues';
+        $normalized = strtolower(trim($role));
+        if (in_array($normalized, ['admin', 'administrator'], true)) {
+            return 'Administrator';
+        }
+        if (in_array($normalized, ['demoadmin', 'demo_admin', 'demo-admin', 'demo viewer', 'demo_viewer'], true)) {
+            return 'DemoAdmin';
+        }
+        return 'Perdorues';
     }
 }
-

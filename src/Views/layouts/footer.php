@@ -52,6 +52,11 @@
         <span class="developer-credit">Zhvilluar nga <strong>Arlind Hyseni</strong> <a href="https://www.arlindhyseni.online" target="_blank" rel="noopener">www.arlindhyseni.online</a></span>
         <div class="payment-marks"><span>VISA</span><span>Mastercard</span><span>PayPal</span></div>
     </div>
+
+    <a class="back-to-top" href="#top" data-back-to-top aria-label="Kthehu ne fillim te faqes">
+        <span>Back to top</span>
+        <i data-lucide="arrow-up"></i>
+    </a>
 </footer>
 
 <div class="toast" data-toast role="status" aria-live="polite"></div>

@@ -26,7 +26,7 @@ final class AuthController
         verify_form_csrf();
         if ($this->auth->attempt($_POST['email'] ?? '', $_POST['password'] ?? '')) {
             flash('success', 'Mire se erdhe perseri.');
-            redirect(is_admin() ? 'admin' : '');
+            redirect(can_access_admin() ? 'admin' : '');
         }
         render('auth/login', $this->viewData('Kycu | Watches Prishtina', [
             'error' => 'Email ose fjalekalim i pasakte.',
